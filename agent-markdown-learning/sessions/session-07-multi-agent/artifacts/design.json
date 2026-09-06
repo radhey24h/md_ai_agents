@@ -1,0 +1,5 @@
+{
+  "feature": "customer-notification",
+  "status": "PASS",
+  "note": "email-only"
+}

@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "enterprise-workflow": {
+      "type": "stdio",
+      "command": "py",
+      "args": ["-3", "${workspaceFolder}/scripts/mcp_workflow_server.py"],
+      "env": {
+        "PYTHONUNBUFFERED": "1"
+      }
+    }
+  }
+}

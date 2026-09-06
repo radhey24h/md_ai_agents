@@ -1,0 +1,8 @@
+{
+  "feature": "customer-notification",
+  "status": "PASS",
+  "from_": [
+    "qa.json",
+    "security.json"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "feature": "customer-notification",
+  "status": "PASS",
+  "unknowns": [
+    "SMS"
+  ],
+  "facts": [
+    "Email notification can be enabled or disabled.",
+    "Preference belongs to the customer."
+  ],
+  "evidence": [
+    "examples/customer-notification/business-rules.md"
+  ],
+  "inferences": [
+    "GET /customers/{id} is used to load the preference owner."
+  ]
+}

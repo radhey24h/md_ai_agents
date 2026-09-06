@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StageResult",
+  "type": "object",
+  "required": ["workflowId", "featureId", "agent", "status", "summary", "timestamp"],
+  "properties": {
+    "workflowId": { "type": "string" },
+    "featureId": { "type": "string" },
+    "agent": { "type": "string" },
+    "model": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["PENDING", "RUNNING", "PASS", "FAIL", "BLOCKED", "NEEDS_HUMAN", "SKIPPED", "CANCELLED"]
+    },
+    "summary": { "type": "string" },
+    "evidence": { "type": "array" },
+    "artifacts": { "type": "array" },
+    "risks": { "type": "array" },
+    "unknowns": { "type": "array" },
+    "nextStage": { "type": "string" },
+    "timestamp": { "type": "string" }
+  }
+}

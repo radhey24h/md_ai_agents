@@ -1,0 +1,6 @@
+workflow:
+  name: hitl-requirements
+  stages:
+    - requirements
+    - approval-requirements  # type: hitl
+    - architecture

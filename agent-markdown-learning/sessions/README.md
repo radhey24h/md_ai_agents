@@ -1,0 +1,16 @@
+# Sessions
+
+Open in order. Each folder has the same teaching files: `README.md`, `concept.md`, `architecture.md`, `demo.md`, `expected-output.md`, `interview-takeaway.md`.
+
+| # | Folder | Teach |
+|---|--------|--------|
+| 01 | [session-01-foundation](session-01-foundation/README.md) | Agent / Skill / Rule / Doc |
+| 02 | [session-02-artifacts-handoff](session-02-artifacts-handoff/README.md) | Artifact, handoff |
+| 03 | [session-03-sequential](session-03-sequential/README.md) | Pipeline |
+| 04 | [session-04-parallel](session-04-parallel/README.md) | Fan-out / join |
+| 05 | [session-05-hitl](session-05-hitl/README.md) | Human gates |
+| 06 | [session-06-mcp](session-06-mcp/README.md) | Tools |
+| 07 | [session-07-multi-agent](session-07-multi-agent/README.md) | Combined |
+| 08 | [session-08-complete-enterprise](session-08-complete-enterprise/README.md) | Capstone |
+
+Live format is always: **EXPLAIN → SHOW FILE → RUN DEMO → SHOW OUTPUT → EXPLAIN → ASK → NEXT**.

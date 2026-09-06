@@ -1,0 +1,102 @@
+workflow:
+  name: feature-development
+  description: >
+    Basic enterprise feature pipeline with HITL gates before implementation
+    and before release.
+
+  sample_feature: customer-notification
+  sample_request: Implement customer notification preferences.
+
+  model_policy:
+    orchestrator: fast
+    requirements: high-reasoning
+    architect: high-reasoning
+    developer: coding
+    qa-reviewer: high-reasoning
+    security-reviewer: high-reasoning
+
+  stages:
+    - id: requirements
+      type: agent
+      agent: requirements
+      skill: requirements-analysis
+      model: high-reasoning
+      readonly: true
+      output: artifacts/runs/{feature}/requirements.json
+      next: approval-requirements
+
+    - id: approval-requirements
+      type: hitl
+      gate: requirements
+      prompt: Approve requirements before architecture.
+      next:
+        approved: architecture
+        rejected: requirements
+
+    - id: architecture
+      type: agent
+      agent: architect
+      skill: architecture-design
+      model: high-reasoning
+      readonly: true
+      input:
+        - artifacts/runs/{feature}/requirements.json
+        - artifacts/runs/{feature}/approvals/requirements.json
+      output: artifacts/runs/{feature}/design.json
+      next: approval-design
+
+    - id: approval-design
+      type: hitl
+      gate: design
+      prompt: Approve design before any code changes.
+      next:
+        approved: implementation
+        rejected: architecture
+
+    - id: implementation
+      type: agent
+      agent: developer
+      skill: implementation
+      model: coding
+      readonly: false
+      input:
+        - artifacts/runs/{feature}/design.json
+        - artifacts/runs/{feature}/approvals/design.json
+      output: artifacts/runs/{feature}/implementation.json
+      next: qa
+
+    - id: qa
+      type: agent
+      agent: qa-reviewer
+      skill: qa-review
+      model: high-reasoning
+      readonly: true
+      input:
+        - artifacts/runs/{feature}/requirements.json
+        - artifacts/runs/{feature}/design.json
+        - artifacts/runs/{feature}/implementation.json
+      output: artifacts/runs/{feature}/qa.json
+      next: security
+
+    - id: security
+      type: agent
+      agent: security-reviewer
+      skill: security-analysis
+      model: high-reasoning
+      readonly: true
+      input:
+        - artifacts/runs/{feature}/implementation.json
+        - artifacts/runs/{feature}/qa.json
+      output: artifacts/runs/{feature}/security.json
+      next: approval-release
+
+    - id: approval-release
+      type: hitl
+      gate: release
+      prompt: Approve release only if QA passed and security allows release.
+      next:
+        approved: completed
+        rejected: implementation
+
+    - id: completed
+      type: terminal

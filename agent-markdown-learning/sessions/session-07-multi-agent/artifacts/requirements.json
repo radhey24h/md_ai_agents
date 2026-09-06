@@ -1,0 +1,7 @@
+{
+  "feature": "customer-notification",
+  "status": "PASS",
+  "unknowns": [
+    "SMS"
+  ]
+}

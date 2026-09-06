@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "enterprise-workflow": {
+      "command": "py",
+      "args": ["-3", "scripts/mcp_workflow_server.py"],
+      "env": {
+        "PYTHONUNBUFFERED": "1"
+      }
+    }
+  }
+}

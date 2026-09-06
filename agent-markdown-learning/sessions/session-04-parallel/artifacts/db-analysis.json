@@ -1,0 +1,6 @@
+{
+  "feature": "customer-notification",
+  "branch": "db-analysis",
+  "status": "PASS",
+  "note": "Independent db-analysis for notification preferences."
+}

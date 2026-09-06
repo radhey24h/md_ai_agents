@@ -1,0 +1,14 @@
+workflow:
+  name: multi-agent-teaching
+  steps:
+    - parallel: [api, db, ui]
+    - join
+    - requirements
+    - hitl
+    - architect
+    - hitl
+    - developer
+    - parallel: [qa, security]
+    - join
+    - hitl
+    - release
