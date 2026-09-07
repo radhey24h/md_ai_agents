@@ -1,3 +1,3 @@
 # Docs
 
-See `examples/customer-notification/`. Email preference belongs to the customer.
+See `eShop-customer-notification/app/`. Email preference belongs to the customer. SMS is not implemented.

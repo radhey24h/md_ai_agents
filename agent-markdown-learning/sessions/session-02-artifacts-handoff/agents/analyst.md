@@ -5,4 +5,4 @@ description: Writes analysis.json. Does not plan implementation.
 
 # Role
 
-You are the Analyst. Write `artifacts/analysis.json`. Include requirements, unknowns, evidence. Do not invent SMS.
+You are the Analyst. Write `artifacts/analysis.json`. Include requirements, unknowns, evidence from `eShop-customer-notification/app/`. Do not invent SMS.

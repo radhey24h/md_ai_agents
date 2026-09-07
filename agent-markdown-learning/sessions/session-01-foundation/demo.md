@@ -1,13 +1,33 @@
-# Walkthrough — Session 01
+# Session 01 walkthrough
 
-This session is one worker with no pipeline. You are hiring a Customer Analyst: a job card, a playbook, one standing rule, and a fact sheet. Nothing here starts the next agent.
+## The problem
 
-Open `agents/customer-analyst.md`. That file names **who** does the work. It is not an autonomous system and it is not a running process. An `.md` file only becomes useful when a runtime (you, or an IDE) loads it.
+Someone types: “Add SMS opt-out for customer notifications.”
 
-Then open `skills/customer-analysis/SKILL.md` and `rules/no-invent.md` side by side. The skill is *how* this kind of analysis is done — a reusable playbook. The rule is a few lines of *what must always be true*. You *could* paste the skill into the agent file, but then the agent becomes a wiki and nobody else can reuse the playbook. Skill = how. Agent = this worker.
+A generic chat will invent Twilio. eShop already ships **email** when an order ships. Maya wants that mail. Omar opted out — warehouse still ships, **no email**. SMS is not in the product.
 
-Now walk a real request: “Add SMS opt-out.” Read `docs/notification-facts.md` and `../../examples/customer-notification/business-rules.md`. SMS is not in those files, so it is **UNKNOWN**, not a fact. Inventing SMS is the failure this session exists to prevent. Label what you know as FACT, EVIDENCE, INFERENCE, or UNKNOWN.
+This session has **one** worker. Four kinds of file.
 
-Optional: write a few lines into `artifacts/analysis-notes.md` using those labels. A filled example is in [README — Expected output](README.md#expected-output).
+## What to do
 
-If a planner joined tomorrow, they could not trust a Slack screenshot of this chat. Today we only separated the four files. Session 02 freezes the result as a file they can actually read.
+1. Open `agents/customer-analyst.md` — the **job card** (who). It does nothing until a runtime reads it.
+
+2. Open `skills/customer-analysis/SKILL.md` then `rules/no-invent.md` — **how** vs **must always be true**.
+
+3. Prove email from code. Open:
+   - `../../eShop-customer-notification/business-rules.md`
+   - `../../eShop-customer-notification/app/shop/services/notifications.py` (skip on opt-out)
+   - `../../eShop-customer-notification/app/shop/api/http.py` (routes)
+   - `../../eShop-customer-notification/app/shop/web/settings.html` (email checkbox only)
+
+   Search for `sms`. You should find no SMS implementation. UNKNOWN, not “add Twilio.”
+
+4. Optional: copy [Expected output](README.md#expected-output). Cite **file paths**.
+
+## The point
+
+**Who / how / must / facts are four files.** Facts include the shop. No SMS in code → do not ship SMS.
+
+## Next
+
+A planner was not in this chat. Session 02 is the JSON they can trust.

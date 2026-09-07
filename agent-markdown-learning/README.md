@@ -103,8 +103,8 @@ Developers, technical leads, architects, AI engineers, solution architects, engi
 
 1. Skim [Glossary](#glossary) once.
 2. Follow [learning-path.md](learning-path.md).
-3. For a live walkthrough, follow each session’s `demo.md` (what to open, what to run, what you should see).
-4. Keep [examples/customer-notification](examples/customer-notification/README.md) open. The same feature grows from Session 1 to Session 8.
+3. For a live walkthrough, open each session’s `demo.md`: the problem, what to do, the one takeaway.
+4. Keep [eShop-customer-notification](eShop-customer-notification/README.md) open. The same shop grows from Session 1 to Session 8.
 
 Do not start at Session 8. Session 1 is intentionally small.
 
@@ -196,10 +196,10 @@ Do not tell learners that a folder of `.md` files is a workflow engine.
 ## Evidence
 
 ```text
-FACT:      GET /customers/{id} exists.
-EVIDENCE:  Sample catalog in examples/customer-notification/sample-data/
-INFERENCE: Used for customer lookup.
-UNKNOWN:   Whether SMS is a supported channel.
+FACT:      GET/PUT /api/customers/{id}/preferences and POST /api/orders/{id}/ship exist.
+EVIDENCE:  eShop-customer-notification/app/shop/api/http.py
+INFERENCE: Preferences are customer-owned; shipping is the send path.
+UNKNOWN:   Whether SMS is a supported channel (not in http.py, db.py, or the HTML pages).
 ```
 
 If it is not proven, it is UNKNOWN. Agents must not invent business behavior.

@@ -43,7 +43,8 @@ One business example throughout: **Customer Notification Preferences**.
 - [Learning README](agent-markdown-learning/README.md) — glossary, execution decisions, least privilege
 - [Learning path](agent-markdown-learning/learning-path.md) — what each session adds
 - [Sessions index](agent-markdown-learning/sessions/README.md)
-- [Customer notification example](agent-markdown-learning/examples/customer-notification/README.md)
+- [eShop customer notifications](agent-markdown-learning/eShop-customer-notification/README.md) — shop API (email opt-in/out)
+- [Runnable Python app](agent-markdown-learning/eShop-customer-notification/app/README.md)
 
 Open `agent-markdown-learning/` and start at Session 01. Do not start at Session 08.
 

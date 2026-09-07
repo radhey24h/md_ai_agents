@@ -1,3 +1,3 @@
 # MCP session facts
 
-Email notification preference belongs to the customer. SMS is UNKNOWN.
+eShop: `eShop-customer-notification/app/`. Email preference belongs to the customer. SMS is UNKNOWN.

@@ -13,4 +13,4 @@ Open in order. Each folder has two teaching files: `README.md` (study) and `demo
 | 07 | [session-07-multi-agent](session-07-multi-agent/README.md) | Combined |
 | 08 | [session-08-complete-enterprise](session-08-complete-enterprise/README.md) | Capstone |
 
-Each `demo.md` is a short walkthrough in paragraphs: what to open or run, what you should see, and why it matters.
+Each `demo.md` is a walkthrough: a real problem, what to open or run, then one takeaway.

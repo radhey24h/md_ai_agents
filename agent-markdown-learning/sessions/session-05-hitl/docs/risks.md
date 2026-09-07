@@ -1,3 +1,3 @@
 # Docs
 
-Ambiguous SMS is a HITL topic, not an agent invention.
+SMS is not in eShop. Treating “add SMS” as in-scope without a human is HITL, not an agent invention.

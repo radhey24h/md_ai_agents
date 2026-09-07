@@ -1,22 +1,41 @@
-# Walkthrough — Session 04
+# Session 04 walkthrough
 
-Three people can open the same repo at once. None of them needs the others’ JSON first.
+## The problem
 
-Open `workflow/parallel.yaml` and the three analyzer agents (`api-analyzer`, `db-analyzer`, `ui-analyzer`). In this teaching example, UI analysis does **not** wait for `api-analysis.json`. No dependency → parallel.
+To understand “customer notification preferences” you need three inventories: how the API looks, how the database looks, how the UI looks. None of those three needs the others’ file first. If you run them one after another, you waste time. If you run **architecture and developer** at the same time, the developer codes against a design that is not finished.
 
-The consolidator is different: it must wait for all three branches. Run:
+Parallel is not “go faster.” Parallel is “these tasks do not wait on each other.”
 
-```powershell
-cd sessions/session-04-parallel
-py -3 run_parallel.py
-```
+## What to do
 
-You should see four files: three branch analyses plus `consolidated-analysis.json`. Starting the consolidator after only the API file would leave downstream incomplete. Join policy here is `all`.
+1. Open `workflow/parallel.yaml` and the three agents. Then open the **real** eShop files:
+   - API: `../../eShop-customer-notification/app/shop/api/http.py`
+   - DB: `../../eShop-customer-notification/app/shop/db.py`
+   - UI: `../../eShop-customer-notification/app/shop/web/settings.html` and `warehouse.html`
 
-Then show the illegal pairing:
+   None of those inventories needs the others’ JSON first. That is why they can run together.
 
-```powershell
-py -3 run_parallel.py illegal
-```
+2. Run:
 
-That must error: Developer depends on Architecture. Dependency exists → sequential (and later, a human gate).
+   ```powershell
+   cd sessions/session-04-parallel
+   py -3 run_parallel.py
+   ```
+
+   You get three branch files, then `consolidated-analysis.json`. The consolidator is the **join**: it waits until all three exist. Starting it after only the API file would ship a half picture.
+
+3. Run the bad pairing on purpose:
+
+   ```powershell
+   py -3 run_parallel.py illegal
+   ```
+
+   It errors: developer depends on architecture. That is the other half of the lesson.
+
+## The point
+
+**No dependency → parallel, then join. Dependency → sequential.** Do not put Architect and Developer in the same fan-out.
+
+## Next
+
+A join file is still not a business decision. Session 05 stops the machine until a **person** approves or sends work back.

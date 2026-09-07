@@ -1,3 +1,3 @@
 # Docs
 
-Customer owns email notification preference. Opt-out must be honored.
+Email preference per customer. Ship skips opt-out. See `eShop-customer-notification/app/`.

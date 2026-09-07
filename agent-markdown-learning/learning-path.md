@@ -13,7 +13,7 @@ Eight sessions. Each is independently readable. Each assumes only what the previ
 | 07 | Multi-Agent | Orchestration | Sequential + parallel |
 | 08 | Complete Enterprise | Everything | Complete |
 
-Business thread: **Customer Notification Preferences** ([examples/customer-notification](examples/customer-notification/README.md)).
+Business thread: **eShop customer notification preferences** ([eShop-customer-notification](eShop-customer-notification/README.md)).
 
 ---
 

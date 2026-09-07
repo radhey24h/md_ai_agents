@@ -35,7 +35,7 @@ MODEL  →  AGENT (Customer Analyst)
                    analysis notes
 ```
 
-Permissions: read docs and examples only. No next agent. No tools.
+Permissions: read docs and the eShop app only. No next agent. No tools.
 
 ## Folder structure
 
@@ -60,19 +60,19 @@ The runtime (you, or an IDE) loads the agent file. A careful worker follows the 
 Conceptual (you may type this by hand). Not a workflow contract yet.
 
 ```text
-FACT: Email opt-in/out is a business rule.
-EVIDENCE: examples/customer-notification/business-rules.md items 1–4.
-INFERENCE: Preference should sit on the customer, not on the mailer.
-UNKNOWN: SMS / push / locales.
+FACT: Email opt-in/out is implemented per customer. Ship skips opted-out buyers.
+EVIDENCE: app/shop/services/notifications.py skipped_opt_out; app/shop/db.py email_enabled.
+INFERENCE: Preference sits on the customer, not on the warehouse job.
+UNKNOWN: SMS / push / locales — not in the app.
 
-Do not implement. Do not design URLs yet.
+Do not add SMS. Do not invent routes that are not in app/shop/api/http.py.
 ```
 
 A filled example lives at `artifacts/sample-analysis-notes.md`.
 
 ## What to observe
 
-SMS is not in the docs. The analyst must say UNKNOWN, not invent it.
+SMS is not in the app. The analyst must say UNKNOWN, not invent it.
 
 ## Common mistakes
 

@@ -1,34 +1,50 @@
-# Walkthrough — Session 05
+# Session 05 walkthrough
 
-Accepting requirements is a high-risk step. A named person signs. The model does not.
+## The problem
 
-```powershell
-cd sessions/session-05-hitl
-py -3 run_hitl.py start
-py -3 run_hitl.py run
-py -3 run_hitl.py run
-```
+Requirements look “good enough.” The model writes `approved: true` on its own homework and the architect starts. That is not governance. That is the intern marking their own exam.
 
-The first `run` writes `requirements.json` and stops at a HITL gate. The second `run` must **stop** again. The architect has not run. A sentence in a prompt (“please get approval”) is not a gate. A stopped runner is.
+Human-in-the-loop means the **run actually stops**. A sentence in a prompt (“please get a human”) does nothing. You need a gate: no next agent until a named person records approve or reject.
 
-Approve path — a human records the decision, then work continues:
+Use this for things you cannot undo cheaply: architecture, missing business rules, breaking APIs, security exceptions, production.
 
-```powershell
-py -3 run_hitl.py approve --by "alex" --comment "email-only is enough"
-py -3 run_hitl.py run
-```
+## What to do
 
-You should see `approvals/requirements.json` with `status: approved`, then a design artifact.
+1. Show that it **stops**:
 
-Reject path — start again so you can show the other branch:
+   ```powershell
+   cd sessions/session-05-hitl
+   py -3 run_hitl.py start
+   py -3 run_hitl.py run
+   py -3 run_hitl.py run
+   ```
 
-```powershell
-py -3 run_hitl.py start
-py -3 run_hitl.py run
-py -3 run_hitl.py reject --by "alex" --comment "need explicit opt-out wording"
-py -3 run_hitl.py run
-```
+   First `run` writes requirements. Second `run` prints STOP. There is no `design.json` yet. The architect did not secretly continue.
 
-Current stage returns to **requirements**. Reject is rework, not “skip to release.”
+2. Show **approve** (a person named alex):
 
-The same pattern belongs on security exceptions and production. Session 06 adds tools (MCP). Approve stays human-only even when it is a tool name.
+   ```powershell
+   py -3 run_hitl.py approve --by "alex" --comment "email-only is enough"
+   py -3 run_hitl.py run
+   ```
+
+   Open `approvals/requirements.json`. Status is approved, with a human name. Then design appears.
+
+3. Show **reject** (start a fresh run):
+
+   ```powershell
+   py -3 run_hitl.py start
+   py -3 run_hitl.py run
+   py -3 run_hitl.py reject --by "alex" --comment "need explicit opt-out wording"
+   py -3 run_hitl.py run
+   ```
+
+   Work goes **back to requirements**, not forward to release. Reject is “fix this,” not “ship anyway.”
+
+## The point
+
+**The model must never approve its own output.** HITL is a stopped runner plus a signed file.
+
+## Next
+
+Session 06 is tools. `hitl_approve` can be a tool name — it still must not be called by the model for its own work.

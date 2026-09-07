@@ -1,3 +1,3 @@
 # Facts
 
-Email opt-in/out. Preference belongs to the customer. SMS is UNKNOWN.
+Email preference is per customer. Shipping honors opt-out (`skipped_opt_out`). SMS is UNKNOWN — not in eShop.

@@ -51,7 +51,7 @@ Analyst finishes → writes JSON → planner starts with an empty chat but a ful
 
 ## Expected output
 
-Teaching sample is already in `artifacts/analysis.json`: `feature`, `requirements`, `assumptions`, `unknowns` (SMS / push / locales), `evidence` pointing at the business rules. Status `PASS`.
+Teaching sample is already in `artifacts/analysis.json`. Evidence is **paths into eShop** (`http.py`, `notifications.py`, `db.py`, `settings.html`, `warehouse.html`, tests). `unknowns` still lists SMS / push / locales.
 
 ## What to observe
 

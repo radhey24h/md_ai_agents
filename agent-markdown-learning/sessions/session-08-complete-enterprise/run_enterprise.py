@@ -83,8 +83,12 @@ def cmd_run() -> None:
         dump(
             "requirements.json",
             facts=["Email notification can be enabled or disabled.", "Preference belongs to the customer."],
-            evidence=["examples/customer-notification/business-rules.md"],
-            inferences=["GET /customers/{id} is used to load the preference owner."],
+            evidence=[
+                "eShop-customer-notification/app/shop/api/http.py",
+                "eShop-customer-notification/app/shop/services/notifications.py",
+                "eShop-customer-notification/business-rules.md",
+            ],
+            inferences=["GET /api/customers/{id} loads the preference owner."],
             unknowns=["SMS"],
         )
         s["current"] = "approval-requirements"

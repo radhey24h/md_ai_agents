@@ -59,7 +59,7 @@ artifacts/ui-analysis.json
 artifacts/consolidated-analysis.json
 ```
 
-`py -3 run_parallel.py illegal` prints that architecture and developer cannot share a parallel group.
+Each branch JSON cites a real eShop file (`http.py`, `db.py`, settings + warehouse HTML). SMS stays unknown. `py -3 run_parallel.py illegal` prints that architecture and developer cannot share a parallel group.
 
 ## What to observe
 

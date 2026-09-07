@@ -2,4 +2,5 @@
 name: api-analyzer
 description: Independent API inventory. Does not wait for DB or UI.
 ---
-Write `artifacts/api-analysis.json`. Read docs and sample-data only. Do not invent SMS.
+Read `eShop-customer-notification/app/shop/api/http.py`.
+Write `artifacts/api-analysis.json`. Do not invent SMS routes.

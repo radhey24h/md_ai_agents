@@ -9,9 +9,11 @@
     "Preference belongs to the customer."
   ],
   "evidence": [
-    "examples/customer-notification/business-rules.md"
+    "eShop-customer-notification/app/shop/api/http.py",
+    "eShop-customer-notification/app/shop/services/notifications.py",
+    "eShop-customer-notification/business-rules.md"
   ],
   "inferences": [
-    "GET /customers/{id} is used to load the preference owner."
+    "GET /api/customers/{id} loads the preference owner. POST /api/orders/{id}/ship is the send path."
   ]
 }

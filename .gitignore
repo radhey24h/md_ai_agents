@@ -30,3 +30,7 @@ env/
 # Workflow run output (enterprise sample)
 **/artifacts/runs/
 **/artifacts/active-run.json
+
+# Local sqlite from the learning example
+**/app/data/*.sqlite
+**/app/data/*.db

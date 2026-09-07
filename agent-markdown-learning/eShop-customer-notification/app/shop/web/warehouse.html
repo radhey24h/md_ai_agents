@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>eShop — warehouse</title>
+  <style>
+    body { font-family: Segoe UI, sans-serif; max-width: 40rem; margin: 2rem auto; }
+    table { border-collapse: collapse; width: 100%; }
+    td, th { border: 1px solid #ccc; padding: 0.4rem 0.6rem; text-align: left; }
+    pre { background: #f4f4f4; padding: 0.75rem; overflow: auto; }
+  </style>
+</head>
+<body>
+  <h1>Warehouse</h1>
+  <p>Teaching app: <strong>no login</strong>. Shipping an order emails the customer <strong>only if</strong> they opted in. Omar (ORD-502) is opted out.</p>
+  <p><a href="/settings">Customer settings</a></p>
+  <table>
+    <thead><tr><th>Order</th><th>Customer</th><th>SKU</th><th>Status</th><th></th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <pre id="out"></pre>
+  <script>
+    const out = document.getElementById("out");
+    async function load() {
+      const orders = await (await fetch("/api/orders")).json();
+      document.getElementById("rows").innerHTML = orders.map(o =>
+        `<tr><td>${o.id}</td><td>${o.customer_id}</td><td>${o.sku}</td><td>${o.status}</td>
+         <td><button data-id="${o.id}">Ship</button></td></tr>`
+      ).join("");
+      document.querySelectorAll("button[data-id]").forEach(b => {
+        b.onclick = async () => {
+          const r = await fetch("/api/orders/" + b.dataset.id + "/ship", { method: "POST" });
+          out.textContent = JSON.stringify(await r.json(), null, 2);
+          load();
+        };
+      });
+    }
+    load();
+  </script>
+</body>
+</html>
