@@ -4,7 +4,7 @@
 
 Show why the next worker must read a **file**, not the previous chat.
 
-## What You Will Learn
+## What you will learn
 
 - Artifact vs conversation
 - Handoff
@@ -14,15 +14,23 @@ Show why the next worker must read a **file**, not the previous chat.
 
 Session 01.
 
-## Concepts
+## How it works
 
-See [concept.md](concept.md). Chat = conversation. Artifact = durable handoff.
+```text
+ANALYST (write) → artifacts/analysis.json → PLANNER (read only that file)
+```
 
-## Architecture
+Chat = conversation. Artifact = durable handoff.
 
-See [architecture.md](architecture.md).
+| | Chat | Artifact |
+|--|------|----------|
+| Lives | Session buffer | Git / disk |
+| Next agent | Often cannot see it | Always can |
+| Audit | Weak | Strong |
 
-## Folder Structure
+State here is: analysis complete; path is `artifacts/analysis.json`. Still no workflow engine. Handoff is a **convention**: the planner job card names the file.
+
+## Folder structure
 
 ```text
 agents/analyst.md
@@ -33,46 +41,32 @@ docs/notification-facts.md
 artifacts/analysis.json
 ```
 
-## Step-by-Step Demo
+## Demo
 
-### Step 1
+Walkthrough: [demo.md](demo.md).
 
-Show `agents/analyst.md` output path: `artifacts/analysis.json`.
-
-### Step 2
-
-Open the JSON. Point at `unknowns` and `evidence`.
-
-### Step 3
-
-Show `agents/planner.md`: it lists **only** that JSON as input. Hide the chat.
-
-Full script: [demo.md](demo.md).
-
-## What Happens Internally
+## What happens internally
 
 Analyst finishes → writes JSON → planner starts with an empty chat but a full artifact.
 
-## Expected Output
+## Expected output
 
-See [expected-output.md](expected-output.md) and `artifacts/analysis.json`.
+Teaching sample is already in `artifacts/analysis.json`: `feature`, `requirements`, `assumptions`, `unknowns` (SMS / push / locales), `evidence` pointing at the business rules. Status `PASS`.
 
-## What to Observe
+## What to observe
 
 Planner must not ask “what did we decide in chat?”
 
-## Common Mistakes
+## Common mistakes
 
 Passing a 4,000-word transcript. Two agents expecting different filenames.
 
-## Questions to Ask During the Demo
+## Interview takeaway
 
-See [demo.md](demo.md).
+1. “Agents should hand off **artifacts**, not conversation transcripts.”
+2. “An artifact is durable, reviewable, and the next stage’s input contract.”
+3. “If the next agent needs hidden chat context, the architecture already failed.”
 
-## Interview Takeaway
-
-See [interview-takeaway.md](interview-takeaway.md).
-
-## Next Session
+## Next session
 
 [Session 03 — Sequential](../session-03-sequential/README.md)

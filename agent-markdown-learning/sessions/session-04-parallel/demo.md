@@ -1,66 +1,22 @@
-# Demo — Session 04
+# Walkthrough — Session 04
 
-### Say
+Three people can open the same repo at once. None of them needs the others’ JSON first.
 
-Three people can open the repo at once. None needs the others’ JSON first.
+Open `workflow/parallel.yaml` and the three analyzer agents (`api-analyzer`, `db-analyzer`, `ui-analyzer`). In this teaching example, UI analysis does **not** wait for `api-analysis.json`. No dependency → parallel.
 
-### Demo
-
-`workflow/parallel.yaml` and the three agent files.
-
-### Ask
-
-Does UI analysis need `api-analysis.json`?
-
-### Expected
-
-Not in this teaching example.
-
-### Explain
-
-No dependency → parallel.
-
----
-
-### Say
-
-The consolidator must wait.
-
-### Demo
+The consolidator is different: it must wait for all three branches. Run:
 
 ```powershell
 cd sessions/session-04-parallel
 py -3 run_parallel.py
 ```
 
-Show four JSON files.
+You should see four files: three branch analyses plus `consolidated-analysis.json`. Starting the consolidator after only the API file would leave downstream incomplete. Join policy here is `all`.
 
-### Ask
+Then show the illegal pairing:
 
-Could we start the consolidator after only API analysis?
+```powershell
+py -3 run_parallel.py illegal
+```
 
-### Expected
-
-No. Join is `all`.
-
-### Explain
-
-Downstream would be incomplete.
-
----
-
-### Say
-
-Illegal pairing.
-
-### Demo
-
-`py -3 run_parallel.py illegal`
-
-### Expected
-
-Error: Developer depends on Architecture.
-
-### Explain
-
-Dependency exists → sequential (and later HITL).
+That must error: Developer depends on Architecture. Dependency exists → sequential (and later, a human gate).

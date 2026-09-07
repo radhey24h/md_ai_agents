@@ -4,7 +4,7 @@
 
 Capstone. **Customer Notification Preferences** through the full teaching path. No new primitive — show how Sessions 01–07 fit.
 
-## What You Will Learn
+## What you will learn
 
 The whole picture: foundation → artifacts → seq/parallel → HITL → MCP (as a layer) → multi-agent → this run.
 
@@ -12,15 +12,35 @@ The whole picture: foundation → artifacts → seq/parallel → HITL → MCP (a
 
 Sessions 01–07.
 
-## Concepts
+## How it works
 
-See [concept.md](concept.md).
+```text
+                FEATURE
+                   │
+             ORCHESTRATOR
+                   │
+          ┌────────┼────────┐
+          ▼        ▼        ▼
+        API       DB       UI
+          │        │        │
+          └────────┼────────┘
+                   ▼
+                  JOIN → HITL
+                   ↓
+               Requirements → HITL
+                   ↓
+               Architecture → HITL
+                   ↓
+              Implementation
+                   ↓
+              QA + Security → JOIN → HITL → Release
+```
 
-## Architecture
+Evidence labels (FACT / EVIDENCE / INFERENCE / UNKNOWN) stay on requirements and discovery artifacts. Least privilege as in Session 07. MCP remains the toolbox (Session 06); this script uses the filesystem so the workshop works without IDE config.
 
-See [architecture.md](architecture.md).
+This is **not** a copy of `enterprise-agent-platform/`. It is a classroom path with the same *ideas*.
 
-## Folder Structure
+## Folder structure
 
 ```text
 agents/     orchestrator, discovery (api/db/ui), consolidator,
@@ -30,46 +50,43 @@ artifacts/ approvals/
 run_enterprise.py
 ```
 
-This is **not** a copy of `enterprise-agent-platform/`. It is a classroom path with the same *ideas*.
+## Demo
 
-## Step-by-Step Demo
+Walkthrough: [demo.md](demo.md).
 
-### Step 1
-
-Show `../../examples/customer-notification/business-rules.md`.
-
-### Step 2
-
-Walk [architecture.md](architecture.md) diagrams (parallel discovery, then gated delivery).
-
-### Step 3
-
-Run `run_enterprise.py` with the HITL pauses documented in [demo.md](demo.md).
-
-## What Happens Internally
+## What happens internally
 
 Same as Sessions 03–05: files + state. MCP is referenced, not re-implemented here.
 
-## Expected Output
+## Expected output
 
-See [expected-output.md](expected-output.md).
+```text
+artifacts/
+  api-analysis.json  db-analysis.json  ui-analysis.json  consolidated-discovery.json
+  requirements.json  design.json  implementation.json  qa.json  security.json
+  state.json
+approvals/
+  discovery.json  requirements.json  design.json  release.json
+```
 
-## What to Observe
+`status` ends at `completed` after release HITL. `unknowns` still include SMS.
+
+## What to observe
 
 SMS stays UNKNOWN. Release waits for join of QA and security plus HITL.
 
-## Common Mistakes
+## Common mistakes
 
 Calling this “production Cursor.” It is a demo runtime.
 
-## Questions to Ask During the Demo
+## Interview takeaway
 
-See [demo.md](demo.md).
+1. “A production-grade multi-agent system needs more than prompts: it needs role separation, skills, rules, artifacts, workflow state, tool access, guardrails and human gates.”
+2. “Markdown configures workers; a runtime enforces order and HITL; MCP exposes tools.”
+3. “I parallelize independent discovery and QA/security; I serialize anything that needs an approved design.”
+4. “If behavior is unproven I label UNKNOWN — I do not invent business rules.”
+5. “The developer must not be the only judge of the developer’s work.”
 
-## Interview Takeaway
-
-See [interview-takeaway.md](interview-takeaway.md).
-
-## Next Session
+## Next
 
 Apply the split in a real repository. Keep knowledge in one `agents/` `skills/` `rules/` `docs/` tree; use workflow + HITL for control; use MCP for tools.

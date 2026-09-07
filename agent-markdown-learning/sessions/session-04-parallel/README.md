@@ -4,7 +4,7 @@
 
 Run **independent** analysis together. **Join** before anyone depends on the full picture. Do not parallelize Architecture + Developer.
 
-## What You Will Learn
+## What you will learn
 
 Fan-out, join, good vs bad parallel candidates.
 
@@ -12,15 +12,29 @@ Fan-out, join, good vs bad parallel candidates.
 
 Session 03.
 
-## Concepts
+## How it works
 
-See [concept.md](concept.md).
+```text
+          FEATURE
+             │
+    ┌────────┼────────┐
+    ▼        ▼        ▼
+   API      DB       UI     (no dependencies)
+    │        │        │
+    └────────┼────────┘
+             ▼
+           JOIN (all)
+             ▼
+       consolidator
+```
 
-## Architecture
+Synchronization: `join: all` in `workflow/parallel.yaml`.
 
-See [architecture.md](architecture.md).
+**Good parallel:** API inventory, DB inventory, UI inventory, dependency inventory, security *inventory* (not release).
 
-## Folder Structure
+**Bad parallel:** Architecture + Developer when Developer requires approved architecture.
+
+## Folder structure
 
 ```text
 workflow/parallel.yaml
@@ -28,46 +42,39 @@ run_parallel.py
 agents/  skills/  rules/  docs/  artifacts/
 ```
 
-## Step-by-Step Demo
+## Demo
 
-### Step 1
+Walkthrough: [demo.md](demo.md).
 
-Show the three independent analysts.
-
-### Step 2
-
-`py -3 run_parallel.py` writes three files then `consolidated-analysis.json`.
-
-### Step 3
-
-Show `run_parallel.py illegal` — architecture+developer blocked.
-
-Details: [demo.md](demo.md).
-
-## What Happens Internally
+## What happens internally
 
 Branches have no input edges to each other. Join waits for all three.
 
-## Expected Output
+## Expected output
 
-See [expected-output.md](expected-output.md).
+```text
+artifacts/api-analysis.json
+artifacts/db-analysis.json
+artifacts/ui-analysis.json
+artifacts/consolidated-analysis.json
+```
 
-## What to Observe
+`py -3 run_parallel.py illegal` prints that architecture and developer cannot share a parallel group.
+
+## What to observe
 
 Consolidator does not start with only one branch.
 
-## Common Mistakes
+## Common mistakes
 
 Starting Developer in the same fan-out as Architect.
 
-## Questions to Ask During the Demo
+## Interview takeaway
 
-See [demo.md](demo.md).
+1. “I parallelize only independent tasks and introduce a join before downstream agents consume their combined output.”
+2. “API, database, and UI discovery are typical fan-out work; architecture then development is not.”
+3. “A join policy of `all` means incomplete branches cannot silently proceed.”
 
-## Interview Takeaway
-
-See [interview-takeaway.md](interview-takeaway.md).
-
-## Next Session
+## Next session
 
 [Session 05 — HITL](../session-05-hitl/README.md)

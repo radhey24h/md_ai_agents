@@ -1,87 +1,13 @@
-# Demo — Session 01
+# Walkthrough — Session 01
 
-### Say
+This session is one worker with no pipeline. You are hiring a Customer Analyst: a job card, a playbook, one standing rule, and a fact sheet. Nothing here starts the next agent.
 
-We hired one intern: Customer Analyst. We will not give them a manager yet. We will give a job card, a playbook, one rule, and facts.
+Open `agents/customer-analyst.md`. That file names **who** does the work. It is not an autonomous system and it is not a running process. An `.md` file only becomes useful when a runtime (you, or an IDE) loads it.
 
-### Demo
+Then open `skills/customer-analysis/SKILL.md` and `rules/no-invent.md` side by side. The skill is *how* this kind of analysis is done — a reusable playbook. The rule is a few lines of *what must always be true*. You *could* paste the skill into the agent file, but then the agent becomes a wiki and nobody else can reuse the playbook. Skill = how. Agent = this worker.
 
-Open `agents/customer-analyst.md`.
+Now walk a real request: “Add SMS opt-out.” Read `docs/notification-facts.md` and `../../examples/customer-notification/business-rules.md`. SMS is not in those files, so it is **UNKNOWN**, not a fact. Inventing SMS is the failure this session exists to prevent. Label what you know as FACT, EVIDENCE, INFERENCE, or UNKNOWN.
 
-### Ask
+Optional: write a few lines into `artifacts/analysis-notes.md` using those labels. A filled example is in [README — Expected output](README.md#expected-output).
 
-Is this an autonomous system?
-
-### Expected
-
-No. It is a job description.
-
-### Explain
-
-An `.md` file is not an agent by itself. A runtime has to load it.
-
----
-
-### Say
-
-Now the playbook. This is *how* to analyze, not *who*.
-
-### Demo
-
-Open `skills/customer-analysis/SKILL.md`. Contrast with `rules/no-invent.md` (three lines).
-
-### Ask
-
-Could we paste the skill into the agent file?
-
-### Expected
-
-Yes, but then you cannot reuse the playbook and the agent becomes a wiki.
-
-### Explain
-
-Skill = reusable how. Agent = this worker.
-
----
-
-### Say
-
-Facts live in docs. Walk the request: “Add SMS opt-out.”
-
-### Demo
-
-`docs/notification-facts.md` and `../../examples/customer-notification/business-rules.md`.
-
-### Ask
-
-Is SMS a FACT?
-
-### Expected
-
-UNKNOWN. Not in the rules or sample data.
-
-### Explain
-
-FACT / EVIDENCE / INFERENCE / UNKNOWN. Inventing SMS is the failure mode this session exists to prevent.
-
----
-
-### Say
-
-Optional: write a few lines into `artifacts/analysis-notes.md` using those labels.
-
-### Demo
-
-Show [expected-output.md](expected-output.md).
-
-### Ask
-
-If a planner joined tomorrow, could they trust a Slack screenshot of this chat?
-
-### Expected
-
-No. That is Session 02.
-
-### Explain
-
-Today we only separated the four files. Next we freeze the result as a file.
+If a planner joined tomorrow, they could not trust a Slack screenshot of this chat. Today we only separated the four files. Session 02 freezes the result as a file they can actually read.

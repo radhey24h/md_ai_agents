@@ -40,9 +40,8 @@ One business example throughout: **Customer Notification Preferences**.
 
 **Also useful**
 
+- [Learning README](agent-markdown-learning/README.md) — glossary, execution decisions, least privilege
 - [Learning path](agent-markdown-learning/learning-path.md) — what each session adds
-- [Glossary](agent-markdown-learning/glossary.md)
-- [Architecture overview](agent-markdown-learning/architecture-overview.md) — sequential vs parallel vs HITL vs MCP
 - [Sessions index](agent-markdown-learning/sessions/README.md)
 - [Customer notification example](agent-markdown-learning/examples/customer-notification/README.md)
 

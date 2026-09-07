@@ -1,10 +1,6 @@
-# Demo — Session 05
+# Walkthrough — Session 05
 
-### Say
-
-High-risk step: accepting requirements. A person signs. Not the model.
-
-### Demo
+Accepting requirements is a high-risk step. A named person signs. The model does not.
 
 ```powershell
 cd sessions/session-05-hitl
@@ -13,44 +9,18 @@ py -3 run_hitl.py run
 py -3 run_hitl.py run
 ```
 
-Second `run` should STOP.
+The first `run` writes `requirements.json` and stops at a HITL gate. The second `run` must **stop** again. The architect has not run. A sentence in a prompt (“please get approval”) is not a gate. A stopped runner is.
 
-### Ask
-
-Did the architect already run?
-
-### Expected
-
-No.
-
-### Explain
-
-That is a real gate.
-
----
-
-### Say
-
-Approve path.
-
-### Demo
+Approve path — a human records the decision, then work continues:
 
 ```powershell
 py -3 run_hitl.py approve --by "alex" --comment "email-only is enough"
 py -3 run_hitl.py run
 ```
 
-### Expected
+You should see `approvals/requirements.json` with `status: approved`, then a design artifact.
 
-`approvals/requirements.json` status approved. Architect artifact appears.
-
----
-
-### Say
-
-Reject path (start a new run or reset).
-
-### Demo
+Reject path — start again so you can show the other branch:
 
 ```powershell
 py -3 run_hitl.py start
@@ -59,16 +29,6 @@ py -3 run_hitl.py reject --by "alex" --comment "need explicit opt-out wording"
 py -3 run_hitl.py run
 ```
 
-### Expected
+Current stage returns to **requirements**. Reject is rework, not “skip to release.”
 
-Back to requirements stage.
-
-### Explain
-
-Reject is not “skip to release.”
-
----
-
-### Say
-
-HITL also belongs on security exceptions and production. Next: tools (MCP), still with human-only approve.
+The same pattern belongs on security exceptions and production. Session 06 adds tools (MCP). Approve stays human-only even when it is a tool name.

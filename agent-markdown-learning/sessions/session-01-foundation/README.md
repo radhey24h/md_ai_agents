@@ -4,7 +4,7 @@
 
 Teach the four pieces that people mix up: **who**, **how**, **must**, and **facts**. One tiny agent. No workflow, MCP, HITL, or parallelism.
 
-## What You Will Learn
+## What you will learn
 
 - What an Agent Markdown file is (and is not)
 - Why a Skill is not a Rule
@@ -13,69 +13,80 @@ Teach the four pieces that people mix up: **who**, **how**, **must**, and **fact
 
 ## Prerequisites
 
-None. Read the root [glossary.md](../../glossary.md) if terms are new.
+None. Terms: [root glossary](../../README.md#glossary).
 
-## Concepts
+## How it works
 
-See [concept.md](concept.md).
+Single worker. No pipeline. The model reasons. The agent file says who it is. Markdown does not “run” the analysis by sitting in a folder.
 
-## Architecture
-
-See [architecture.md](architecture.md).
-
-## Folder Structure
+| Piece | Question | In this folder |
+|-------|----------|----------------|
+| Agent | Who performs the work? | `agents/customer-analyst.md` |
+| Skill | How should this type of work be done? | `skills/customer-analysis/SKILL.md` |
+| Rule | What must always be true? | `rules/no-invent.md` |
+| Doc | What facts are known? | `docs/notification-facts.md` |
 
 ```text
-session-01-foundation/
-  agents/customer-analyst.md
-  skills/customer-analysis/SKILL.md
-  rules/no-invent.md
-  docs/notification-facts.md
-  artifacts/   (empty until you write notes)
+MODEL  →  AGENT (Customer Analyst)
+              ├── SKILL  customer-analysis
+              ├── RULE   do not invent
+              └── DOC    notification facts
+                        ↓
+                   analysis notes
 ```
 
-## Step-by-Step Demo
+Permissions: read docs and examples only. No next agent. No tools.
 
-Follow [demo.md](demo.md). Short version:
+## Folder structure
 
-### Step 1
+```text
+agents/customer-analyst.md
+skills/customer-analysis/SKILL.md
+rules/no-invent.md
+docs/notification-facts.md
+artifacts/   (notes after you write them)
+```
 
-Open `agents/customer-analyst.md`. That is **who**.
+## Demo
 
-### Step 2
+Walkthrough: [demo.md](demo.md).
 
-Open `skills/customer-analysis/SKILL.md`. That is **how**.
+## What happens internally
 
-### Step 3
+The runtime (you, or an IDE) loads the agent file. A careful worker follows the skill, obeys the rule, and reads the doc. Nothing here starts the next agent.
 
-Open `rules/no-invent.md` and `docs/notification-facts.md`. **Must** vs **facts**. Walk a user request through all four.
+## Expected output
 
-## What Happens Internally
+Conceptual (you may type this by hand). Not a workflow contract yet.
 
-The runtime (you, or an IDE) loads the agent file. A careful worker then follows the skill, obeys the rule, and reads the doc. Nothing here starts the next agent.
+```text
+FACT: Email opt-in/out is a business rule.
+EVIDENCE: examples/customer-notification/business-rules.md items 1–4.
+INFERENCE: Preference should sit on the customer, not on the mailer.
+UNKNOWN: SMS / push / locales.
 
-## Expected Output
+Do not implement. Do not design URLs yet.
+```
 
-See [expected-output.md](expected-output.md). Informal analysis with labeled unknowns — not JSON yet.
+A filled example lives at `artifacts/sample-analysis-notes.md`.
 
-## What to Observe
+## What to observe
 
 SMS is not in the docs. The analyst must say UNKNOWN, not invent it.
 
-## Common Mistakes
+## Common mistakes
 
 - Putting the whole playbook in the agent file
 - Calling a long procedure a “rule”
 - Treating Confluence-style docs as executable workflow
 
-## Questions to Ask During the Demo
+## Interview takeaway
 
-See [demo.md](demo.md) **Ask** lines.
+1. “An agent file names **who** does the work; it is not a running process by itself.”
+2. “A **skill** is a reusable how-to; a **rule** is a short standing constraint.”
+3. “**Docs** hold system facts. I do not hide the only copy of a business rule inside an IDE-specific agent file.”
+4. “If I cannot prove a behavior, I label it UNKNOWN instead of inventing it.”
 
-## Interview Takeaway
-
-See [interview-takeaway.md](interview-takeaway.md).
-
-## Next Session
+## Next session
 
 [Session 02 — Artifact & Handoff](../session-02-artifacts-handoff/README.md)

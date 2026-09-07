@@ -1,52 +1,22 @@
-# Demo — Session 07
+# Walkthrough — Session 07
 
-### Say
+The orchestrator is a traffic cop, not a superhero developer. Open `agents/orchestrator.md` next to `agents/developer.md`. Even if the orchestrator used the strongest model, it still should not get deploy permission. Model size is not privilege.
 
-The orchestrator is a traffic cop, not a superhero developer.
-
-### Demo
-
-`agents/orchestrator.md` vs `agents/developer.md`.
-
-### Ask
-
-If the orchestrator uses the strongest model, should it get deploy permission?
-
-### Expected
-
-No. Model ≠ privilege.
-
-### Explain
-
-Least privilege.
-
----
-
-### Say
-
-QA and security after code: parallel, then join, then human.
-
-### Demo
+After implementation, QA and security can work in parallel, then join, then a human. Run:
 
 ```powershell
 cd sessions/session-07-multi-agent
 py -3 run_multi.py
 ```
 
-### Ask
+The script writes discovery and requirements artifacts, then **stops** until you treat a human as having approved. Developer must not write `qa.json`. Separate files, separate agents. Writer is not the judge.
 
-Did developer write qa.json?
+Re-run with `--approve-demo` only in class, and say out loud that this flag stands in for a person:
 
-### Expected
+```powershell
+py -3 run_multi.py --approve-demo
+```
 
-No. Separate files, separate agents.
+You should then see design, implementation, QA, security, and a join file.
 
-### Explain
-
-Writer ≠ judge.
-
----
-
-### Say
-
-Session 08 runs the same story as one labeled enterprise demo with the full diagram.
+Session 08 is the same story labeled as one enterprise teaching run, with every gate named.

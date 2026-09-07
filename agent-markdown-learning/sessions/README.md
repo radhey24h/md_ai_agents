@@ -1,6 +1,6 @@
 # Sessions
 
-Open in order. Each folder has the same teaching files: `README.md`, `concept.md`, `architecture.md`, `demo.md`, `expected-output.md`, `interview-takeaway.md`.
+Open in order. Each folder has two teaching files: `README.md` (study) and `demo.md` (live walkthrough).
 
 | # | Folder | Teach |
 |---|--------|--------|
@@ -13,4 +13,4 @@ Open in order. Each folder has the same teaching files: `README.md`, `concept.md
 | 07 | [session-07-multi-agent](session-07-multi-agent/README.md) | Combined |
 | 08 | [session-08-complete-enterprise](session-08-complete-enterprise/README.md) | Capstone |
 
-Live format is always: **EXPLAIN → SHOW FILE → RUN DEMO → SHOW OUTPUT → EXPLAIN → ASK → NEXT**.
+Each `demo.md` is a short walkthrough in paragraphs: what to open or run, what you should see, and why it matters.

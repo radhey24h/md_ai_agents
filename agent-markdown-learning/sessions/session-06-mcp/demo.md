@@ -1,52 +1,16 @@
-# Demo — Session 06
+# Walkthrough — Session 06
 
-### Say
+The analyst is still a job card. MCP does not replace `agents/`. It gives the worker **hands** — a standard way to call tools.
 
-The analyst is still a job card. MCP does not replace `agents/`. It gives hands.
+Open `tools/README.md` and `agents/tool-user.md`. If you deleted MCP, the agent could still *reason* about docs you pasted into context. It could not *call* `workflow_status`. That is reasoning vs capability.
 
-### Demo
-
-`tools/README.md` and `agents/tool-user.md`.
-
-### Ask
-
-If we delete MCP, can the agent still *reason* about docs we pasted?
-
-### Expected
-
-Yes. It cannot *call* workflow_status.
-
-### Explain
-
-Reasoning vs capability.
-
----
-
-### Say
-
-Teaching server. Not the production platform next door.
-
-### Demo
+This server is a teaching demo, not the production platform in `enterprise-agent-platform/`. Run the scripted client so you do not have to paste JSON-RPC by hand:
 
 ```powershell
 cd sessions/session-06-mcp
 py -3 scripts/mcp_client_demo.py
 ```
 
-### Ask
+You should see initialize succeed, a tool list (`workflow_status`, `read_artifact`, `read_project_doc`, `run_next_agent`, `hitl_approve`), a doc snippet, and `hitl_approve` **refused** when the caller is the model. Same rule as Session 05, now on a tool: the model must not approve its own work.
 
-Which tool should a model never call for its own requirements file?
-
-### Expected
-
-`hitl_approve`.
-
-### Explain
-
-Same rule as Session 05, now on a tool.
-
----
-
-### Say
-
-Next: orchestrator plus specialists, still using artifacts, seq/parallel, HITL, and tools as ideas.
+Session 07 puts an orchestrator in front of specialists, still using artifacts, sequence, parallel join, HITL, and tools as ideas.

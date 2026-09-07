@@ -1,32 +1,8 @@
-# Demo — Session 08
+# Walkthrough — Session 08
 
-### Say
+Same feature as Session 01 — Customer Notification Preferences — now with a manager, specialists, joins, and humans. Open `../../examples/customer-notification/README.md`, then `workflow/enterprise.yaml`. SMS must still be UNKNOWN. Docs and rules survived the whole journey; nobody invented a channel along the way.
 
-Same feature as Session 01. Now it has a manager, specialists, joins, and humans.
-
-### Demo
-
-`../../examples/customer-notification/README.md` then `workflow/enterprise.yaml`.
-
-### Ask
-
-Did we invent SMS between Session 1 and Session 8?
-
-### Expected
-
-No. UNKNOWN remains.
-
-### Explain
-
-Docs and rules survived the journey.
-
----
-
-### Say
-
-Live run. Name the human out loud at each gate.
-
-### Demo
+Live run. Name the human at each gate. From this folder:
 
 ```powershell
 cd sessions/session-08-complete-enterprise
@@ -43,20 +19,6 @@ py -3 run_enterprise.py approve --gate release --by "alex"
 py -3 run_enterprise.py status
 ```
 
-### Ask
+Discovery fans out, then HITL. Requirements and design each stop for a person. Implementation cannot run before design HITL — the runner refuses. QA and security join, then release HITL. `status` should end at `completed`.
 
-Could the developer command have run before design HITL?
-
-### Expected
-
-The runner refuses.
-
-### Explain
-
-That is the whole course.
-
----
-
-### Say
-
-Close: production needs roles, skills, rules, artifacts, state, tools, guardrails, humans — not a pile of prompts.
+That is the course in one run: roles, skills, rules, artifacts, workflow state, tools as a layer, guardrails, and humans — not a pile of prompts.

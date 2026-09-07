@@ -1,32 +1,10 @@
-# Demo — Session 03
+# Walkthrough — Session 03
 
-### Say
+Four specialists, one manager: the YAML. The architect designs; it does not run the factory.
 
-Four specialists. One manager: the YAML. The architect does not run the factory.
+Open `workflow/sequential.yaml`. If you deleted that file and kept only the four agent Markdown files, they would **not** run in order by themselves. A folder of `.md` files is not a workflow engine.
 
-### Demo
-
-`workflow/sequential.yaml`
-
-### Ask
-
-If I delete the YAML and keep the four agent files, do they still run in order?
-
-### Expected
-
-Not by themselves.
-
-### Explain
-
-A collection of `.md` files is not a workflow engine.
-
----
-
-### Say
-
-We will use a tiny teaching script. This is not Cursor.
-
-### Demo
+The teaching runtime is a small Python script, not Cursor. From this folder:
 
 ```powershell
 cd sessions/session-03-sequential
@@ -35,20 +13,6 @@ py -3 run_sequential.py
 py -3 run_sequential.py skip-to-developer
 ```
 
-### Ask
+The first two runs write requirements, then architecture. `skip-to-developer` must fail: current stage is still before implementation. That is a **dependency**, not a suggestion. Retry means run the current stage again, not wipe the whole pipeline, unless you delete `artifacts/state.json`.
 
-Did skip-to-developer work?
-
-### Expected
-
-No. Error: architecture not complete.
-
-### Explain
-
-That is dependency. Retry = run the script again on the current failed stage, not a full reset, unless you delete state.
-
----
-
-### Say
-
-Next session: API, DB, and UI analysis do not wait on each other.
+After four successful `run` calls you should have `requirements.json`, `design.json`, `implementation.json`, and `qa.json`. Session 04 is work that does *not* have to wait: API, DB, and UI analysis can start together.
