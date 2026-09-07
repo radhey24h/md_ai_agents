@@ -1,6 +1,0 @@
-{
-  "feature": "customer-notification",
-  "branch": "api-analysis",
-  "status": "PASS",
-  "note": "Independent api-analysis for notification preferences."
-}

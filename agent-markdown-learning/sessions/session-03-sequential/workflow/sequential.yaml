@@ -1,7 +1,0 @@
-workflow:
-  name: sequential-feature
-  stages:
-    - requirements
-    - architecture
-    - implementation
-    - qa

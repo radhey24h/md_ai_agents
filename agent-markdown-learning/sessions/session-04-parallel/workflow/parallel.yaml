@@ -1,8 +1,0 @@
-workflow:
-  name: parallel-discovery
-  fan_out:
-    - api-analysis
-    - db-analysis
-    - ui-analysis
-  join: all
-  then: consolidator
