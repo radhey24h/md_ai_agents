@@ -1,3 +1,3 @@
-# Docs
+# Risks
 
-SMS is not in eShop. Treating “add SMS” as in-scope without a human is HITL, not an agent invention.
+Changing who gets emailed is a product decision. The run must stop for a named human before design. The model must not approve its own write-up.

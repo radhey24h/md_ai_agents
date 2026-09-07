@@ -1,80 +1,44 @@
-# Session 04 — Parallel Agents
+# Session 04 — Look at API, DB, and UI together
 
-## Objective
+## In this session
 
-Run **independent** analysis together. **Join** before anyone depends on the full picture. Do not parallelize Architecture + Developer.
+**Office analog:** Three people can inventory HTTP, SQLite, and the two HTML pages at the same time. The coder still cannot start until architecture exists.
 
-## What you will learn
+**We are doing:** Fan-out three inventories, then **join**. Show that architect + developer in parallel is illegal.
 
-Fan-out, join, good vs bad parallel candidates.
+**We are not doing:** Letting developer start in parallel with architect.
 
-## Prerequisites
+**How to check:**
 
-Session 03.
+```powershell
+py -3 run_parallel.py
+py -3 run_parallel.py illegal
+```
+
+First command: three analyses + `consolidated-analysis.json` citing real eShop files. Second: **error**.
+
+## Why
+
+Reading `http.py`, `db.py`, and the HTML pages does **not** require waiting on each other. Coding **does** require an approved design.
 
 ## How it works
 
 ```text
-          FEATURE
-             │
-    ┌────────┼────────┐
-    ▼        ▼        ▼
-   API      DB       UI     (no dependencies)
-    │        │        │
-    └────────┼────────┘
-             ▼
-           JOIN (all)
-             ▼
-       consolidator
+API inventory  ─┐
+DB inventory   ─┼─► JOIN ─► consolidator
+UI inventory   ─┘
 ```
 
-Synchronization: `join: all` in `workflow/parallel.yaml`.
+## Walkthrough
 
-**Good parallel:** API inventory, DB inventory, UI inventory, dependency inventory, security *inventory* (not release).
-
-**Bad parallel:** Architecture + Developer when Developer requires approved architecture.
-
-## Folder structure
-
-```text
-workflow/parallel.yaml
-run_parallel.py
-agents/  skills/  rules/  docs/  artifacts/
-```
-
-## Demo
-
-Walkthrough: [demo.md](demo.md).
-
-## What happens internally
-
-Branches have no input edges to each other. Join waits for all three.
-
-## Expected output
-
-```text
-artifacts/api-analysis.json
-artifacts/db-analysis.json
-artifacts/ui-analysis.json
-artifacts/consolidated-analysis.json
-```
-
-Each branch JSON cites a real eShop file (`http.py`, `db.py`, settings + warehouse HTML). SMS stays unknown. `py -3 run_parallel.py illegal` prints that architecture and developer cannot share a parallel group.
-
-## What to observe
-
-Consolidator does not start with only one branch.
-
-## Common mistakes
-
-Starting Developer in the same fan-out as Architect.
+[demo.md](demo.md)
 
 ## Interview takeaway
 
-1. “I parallelize only independent tasks and introduce a join before downstream agents consume their combined output.”
-2. “API, database, and UI discovery are typical fan-out work; architecture then development is not.”
-3. “A join policy of `all` means incomplete branches cannot silently proceed.”
+1. Parallelize only independent work; join before anyone consumes the set.
+2. API / DB / UI discovery is typical fan-out; architecture then development is not.
+3. `join: all` means incomplete branches cannot sneak through.
 
-## Next session
+## Next
 
-[Session 05 — HITL](../session-05-hitl/README.md)
+[Session 05](../session-05-hitl/README.md) — a person must sign before design starts.

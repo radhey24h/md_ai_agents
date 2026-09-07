@@ -1,3 +1,3 @@
 # MCP session facts
 
-eShop: `eShop-customer-notification/app/`. Email preference belongs to the customer. SMS is UNKNOWN.
+eShop: C-1001 gets shipping email; C-1002 turned email off. Tools are how a worker *calls* something; they are not the job card.

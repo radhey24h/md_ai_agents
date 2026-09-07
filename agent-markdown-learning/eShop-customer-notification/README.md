@@ -1,41 +1,15 @@
-# eShop — customer notification preferences
+# eShop — the shop the course talks about
 
-Workshop evidence for every session: a small **online shop**. When an order ships, the shop may email the customer. Email is opt-in. **SMS is not in this product.**
+Two customers. Warehouse clicks **Ship**.
 
-## Use case
+- **C-1001** (ORD-501) wants shipping email → mug + email.
+- **C-1002** (ORD-502) does **not** want shipping email → mug, **no email**.
 
-Maya (C-1001) ordered a blue mug (`ORD-501`) and wants shipping emails.  
-Omar (C-1002) ordered a red mug (`ORD-502`) and opted out. Warehouse can still ship; **no email goes out**.
+C-1002’s “don’t email me” is **email opt-out**. That is the whole product.
 
-Someone will ask “add SMS opt-out.” Search the repo. There is no SMS route, column, or checkbox. That is UNKNOWN.
+This shop does **not** send phone texts (SMS). Nobody needs to build that.
 
-## Layout (maps to sessions)
-
-| Layer | Path | Session |
-|-------|------|---------|
-| HTTP API | `app/shop/api/http.py` | 04, 07, 08 API inventory |
-| Database | `app/shop/db.py` | 04, 07, 08 DB inventory |
-| Domain services | `app/shop/services/notifications.py` | 01–02 evidence, 03 implementation target |
-| Outbox API | `GET /api/outbox` | 03 / 07 / 08 QA |
-| Customer UI | `app/shop/web/settings.html` | 04 UI inventory |
-| Warehouse UI | `app/shop/web/warehouse.html` | 04 UI (ops), 08 demo |
-
-## API
-
-| Method | Path | Meaning |
-|--------|------|---------|
-| GET | `/settings` | Customer email toggle (Maya) |
-| GET | `/warehouse` | Staff ships orders |
-| GET | `/api/health` | `channels: ["email"]` only |
-| GET | `/api/customers/{id}` | Customer |
-| GET/PUT | `/api/customers/{id}/preferences` | `{ "email_enabled": true\|false }` — extra fields rejected |
-| GET | `/api/orders` | Order list |
-| GET | `/api/outbox` | Email send log (`sent` / `skipped_opt_out`) — QA evidence |
-| POST | `/api/orders/{id}/ship` | Mark shipped; email or `skipped_opt_out` |
-
-## Run
-
-From `app/` (no pip):
+## Prove it
 
 ```powershell
 cd eShop-customer-notification/app
@@ -43,5 +17,29 @@ py -3 -m unittest discover -s tests -v
 py -3 -m shop
 ```
 
-http://127.0.0.1:8080/settings — Maya’s email checkbox  
-http://127.0.0.1:8080/warehouse — ship ORD-502 and watch skip
+| Page | What to do |
+|------|------------|
+| http://127.0.0.1:8080/settings | C-1001’s **email** checkbox |
+| http://127.0.0.1:8080/warehouse | Ship **ORD-502** (C-1002) |
+| http://127.0.0.1:8080/api/outbox | C-1002’s row: `"status": "skipped_opt_out"` |
+
+## Where the logic lives (sessions read these)
+
+| Layer | Path |
+|-------|------|
+| HTTP | `app/shop/api/http.py` |
+| Database | `app/shop/db.py` |
+| Ship + email | `app/shop/services/notifications.py` |
+| Customer UI | `app/shop/web/settings.html` |
+| Warehouse UI | `app/shop/web/warehouse.html` |
+
+## API
+
+| Method | Path | Meaning |
+|--------|------|---------|
+| GET | `/settings` | C-1001’s email toggle |
+| GET | `/warehouse` | Staff ships orders |
+| GET | `/api/health` | `channels: ["email"]` only |
+| GET/PUT | `/api/customers/{id}/preferences` | `{ "email_enabled": true\|false }` |
+| GET | `/api/outbox` | `sent` or `skipped_opt_out` |
+| POST | `/api/orders/{id}/ship` | Ship; maybe email |

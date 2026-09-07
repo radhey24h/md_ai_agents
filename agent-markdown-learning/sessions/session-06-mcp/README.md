@@ -1,93 +1,39 @@
-# Session 06 — MCP
+# Session 06 — Job card vs tools
 
-## Objective
+## In this session
 
-Separate **job cards** from **capabilities**. MCP is how an agent calls tools. Markdown is not a tool.
+**Office analog:** The job description is not the email server. Hands (tools) are plugged in separately. The model still cannot stamp “approved” on itself.
 
-## What you will learn
+**We are doing:** A tiny teaching MCP client: list tools, read a fact file, refuse `hitl_approve` for the model.
 
-Agent vs MCP vs workflow vs tool. Why `hitl_approve` is human-only.
+**We are not doing:** Replacing eShop. This server is a classroom plug, not Cursor.
 
-## Prerequisites
+**How to check:**
 
-Sessions 03 and 05 conceptually.
+```powershell
+py -3 scripts/mcp_client_demo.py
+```
+
+It lists tools, reads a fact file, and **refuses** `hitl_approve` for the model.
+
+## Why
+
+People say “the agent emailed C-1002.” The `.md` file did not grow SMTP. A **tool** would send mail. MCP is a standard way to expose tools.
 
 ## How it works
 
-```text
-Agent = reasoning + instructions + context + state
-MCP   = standardized access to external tools/data
-```
+Markdown = what to do. Workflow = when. MCP = what it can call.
 
-```text
-Markdown tells the worker what to do.
-Workflow controls when it can do it.
-MCP provides capabilities/tools it can call.
-```
+## Walkthrough
 
-```text
-Agent
- │
- ├── workflow_status
- ├── read_artifact
- ├── read_project_doc
- ├── run_next_agent
- └── hitl_approve   ← human only
-       │
-       ▼
-      MCP
-       │
-       ▼
-     Tools
-```
-
-| Layer | Job |
-|-------|-----|
-| Markdown agent/skill/rule | Who / how / must |
-| Workflow | When |
-| MCP | How to invoke a tool |
-| Tool | The actual capability |
-
-This session’s server is **educational**. Wiring it into Cursor still needs a product MCP config; we do not claim the IDE auto-loads this folder.
-
-## Folder structure
-
-```text
-agents/  skills/  rules/  docs/  workflow/
-tools/                 what each tool means
-scripts/mcp_demo_server.py
-scripts/mcp_client_demo.py
-```
-
-## Demo
-
-Walkthrough: [demo.md](demo.md).
-
-## What happens internally
-
-JSON-RPC over stdin. This is a **teaching** MCP-shaped server, not a product plugin pack.
-
-## Expected output
-
-`py -3 scripts/mcp_client_demo.py` prints initialize ok; tools `workflow_status`, `read_artifact`, `read_project_doc`, `run_next_agent`, `hitl_approve`; `read_project_doc` returns the session doc; `hitl_approve` is refused for model self-approve.
-
-This is a **scripted client**, so you do not need to paste JSON-RPC by hand.
-
-## What to observe
-
-`hitl_approve` is human only. Markdown did not “become” the database.
-
-## Common mistakes
-
-Calling every HTTP API “an agent.” Putting API keys in SKILL.md.
+[demo.md](demo.md)
 
 ## Interview takeaway
 
-1. “MCP separates agent reasoning from external capabilities by providing a standardized mechanism for accessing tools and data.”
-2. “Markdown is the job card; workflow is when; MCP is what the worker can call.”
-3. “I do not put secrets in agent Markdown; tools authenticate outside the prompt.”
-4. “`hitl_approve` is a human recording action, not a self-score by the model.”
+1. MCP separates reasoning from capabilities.
+2. Do not put secrets in agent Markdown.
+3. `hitl_approve` is a human recording a decision.
 
-## Next session
+## Next
 
-[Session 07 — Multi-Agent](../session-07-multi-agent/README.md)
+[Session 07](../session-07-multi-agent/README.md) — traffic cop + specialists on the same shop.

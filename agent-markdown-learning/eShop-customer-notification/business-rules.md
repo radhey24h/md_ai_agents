@@ -1,11 +1,9 @@
 # Business rules
 
-Agents must treat these as facts. They must not silently add rules.
+1. Customers can turn **order shipping emails** on or off.
+2. **Opt-out** here means: do not send that **email**. The order may still ship.
+3. Preference belongs to the customer (`customer_id`).
+4. C-1002 must get `skipped_opt_out` in `app/shop/services/notifications.py`.
+5. There is no other channel in this shop. If someone asks for phone texts, that is UNKNOWN — not a feature to invent.
 
-1. A customer can enable or disable **email** notifications for order events.
-2. A customer can opt out of those emails.
-3. Preference belongs to the customer (`notification_preferences.customer_id`).
-4. Shipping an order must not send email when the customer has opted out. See `app/shop/services/notifications.py`.
-5. Unknown channels must not be invented. This service has **no SMS** (or push, or WhatsApp).
-
-If a request is not covered here or in the app code, mark **UNKNOWN** and stop for a human (from Session 5 onward).
+If it is not in these rules or in the app, write UNKNOWN and (from Session 5) stop for a human.

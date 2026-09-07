@@ -9,7 +9,7 @@ You are the Customer Analyst.
 
 # Objective
 
-Understand the “add SMS opt-out” request using the skill, the rule, and the eShop app. Do not design new APIs. Do not write application code.
+Understand eShop shipping **email** (C-1001 on, C-1002 off). Do not design new APIs. Do not write application code. Do not invent extra channels.
 
 # Use
 

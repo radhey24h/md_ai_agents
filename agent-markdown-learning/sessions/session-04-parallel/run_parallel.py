@@ -36,7 +36,7 @@ def write(name: str, extra: dict | None = None) -> None:
                 "eShop-customer-notification/app/shop/web/settings.html",
                 "eShop-customer-notification/app/shop/web/warehouse.html",
             ],
-            "controls": ["email checkbox for Maya C-1001", "warehouse ship buttons"],
+            "controls": ["email checkbox for C-1001", "warehouse ship buttons"],
             "sms_control": False,
         },
     }

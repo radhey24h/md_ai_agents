@@ -1,92 +1,39 @@
-# Session 01 — Agent / Skill / Rule / Doc
+# Session 01 — Four files, not one blob
 
-## Objective
+## In this session
 
-Teach the four pieces that people mix up: **who**, **how**, **must**, and **facts**. One tiny agent. No workflow, MCP, HITL, or parallelism.
+**Office analog:** A job description, a playbook, a company policy, and a wiki page are four different things. Don’t paste them into one prompt.
 
-## What you will learn
+**We are doing:** Open four Markdown files that describe *how to analyze the shop*. Then prove in code that C-1002 is not emailed.
 
-- What an Agent Markdown file is (and is not)
-- Why a Skill is not a Rule
-- Why Docs are not instructions
-- FACT / EVIDENCE / INFERENCE / UNKNOWN
+**We are not doing:** Changing the shop. Running a pipeline. Building a second channel.
 
-## Prerequisites
+**How to check:** You can point at:
 
-None. Terms: [root glossary](../../README.md#glossary).
+| File | Question it answers |
+|------|---------------------|
+| `agents/customer-analyst.md` | Who is doing the work? |
+| `skills/customer-analysis/SKILL.md` | How do they analyze? |
+| `rules/no-invent.md` | What must they never invent? |
+| `docs/notification-facts.md` | What is already true? |
 
-## How it works
+Your notes (or `artifacts/sample-analysis-notes.md`) cite `notifications.py` and say C-1002 ships without email.
 
-Single worker. No pipeline. The model reasons. The agent file says who it is. Markdown does not “run” the analysis by sitting in a folder.
+## Why
 
-| Piece | Question | In this folder |
-|-------|----------|----------------|
-| Agent | Who performs the work? | `agents/customer-analyst.md` |
-| Skill | How should this type of work be done? | `skills/customer-analysis/SKILL.md` |
-| Rule | What must always be true? | `rules/no-invent.md` |
-| Doc | What facts are known? | `docs/notification-facts.md` |
+If those four live in one chat, the model mixes “who I am” with “how I work” with “what is true.” Then it invents features that are not in the shop.
 
-```text
-MODEL  →  AGENT (Customer Analyst)
-              ├── SKILL  customer-analysis
-              ├── RULE   do not invent
-              └── DOC    notification facts
-                        ↓
-                   analysis notes
-```
+## Walkthrough
 
-Permissions: read docs and the eShop app only. No next agent. No tools.
-
-## Folder structure
-
-```text
-agents/customer-analyst.md
-skills/customer-analysis/SKILL.md
-rules/no-invent.md
-docs/notification-facts.md
-artifacts/   (notes after you write them)
-```
-
-## Demo
-
-Walkthrough: [demo.md](demo.md).
-
-## What happens internally
-
-The runtime (you, or an IDE) loads the agent file. A careful worker follows the skill, obeys the rule, and reads the doc. Nothing here starts the next agent.
-
-## Expected output
-
-Conceptual (you may type this by hand). Not a workflow contract yet.
-
-```text
-FACT: Email opt-in/out is implemented per customer. Ship skips opted-out buyers.
-EVIDENCE: app/shop/services/notifications.py skipped_opt_out; app/shop/db.py email_enabled.
-INFERENCE: Preference sits on the customer, not on the warehouse job.
-UNKNOWN: SMS / push / locales — not in the app.
-
-Do not add SMS. Do not invent routes that are not in app/shop/api/http.py.
-```
-
-A filled example lives at `artifacts/sample-analysis-notes.md`.
-
-## What to observe
-
-SMS is not in the app. The analyst must say UNKNOWN, not invent it.
-
-## Common mistakes
-
-- Putting the whole playbook in the agent file
-- Calling a long procedure a “rule”
-- Treating Confluence-style docs as executable workflow
+[demo.md](demo.md)
 
 ## Interview takeaway
 
-1. “An agent file names **who** does the work; it is not a running process by itself.”
-2. “A **skill** is a reusable how-to; a **rule** is a short standing constraint.”
-3. “**Docs** hold system facts. I do not hide the only copy of a business rule inside an IDE-specific agent file.”
-4. “If I cannot prove a behavior, I label it UNKNOWN instead of inventing it.”
+1. An agent file names **who**; it is not a running process by itself.
+2. A **skill** is a playbook; a **rule** is a short standing constraint.
+3. **Docs + code** are facts.
+4. If you cannot prove it, label UNKNOWN.
 
-## Next session
+## Next
 
-[Session 02 — Artifact & Handoff](../session-02-artifacts-handoff/README.md)
+[Session 02](../session-02-artifacts-handoff/README.md) — put the analysis in a file a planner can open tomorrow.

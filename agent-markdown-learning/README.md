@@ -1,14 +1,63 @@
 # Agent Markdown Learning
 
-Hands-on curriculum for **Agent Markdown architecture**. Start tiny. End with a full enterprise-style workflow. One business example the whole way: **Customer Notification Preferences**.
+Two things live in this folder. Mix them up and the course feels like nonsense.
 
-This folder is a **course and workshop kit**. It is not a production agent platform.
+| Layer | What it is | What you do with it |
+|-------|------------|---------------------|
+| **The shop** | A tiny store that emails when a mug ships | Click it. Prove C-1002 gets no email. |
+| **The course** | Eight sessions on how AI workers should behave | Open Markdown, run a small Python script, see a file appear or a command fail |
 
-> **Markdown is the job card.**  
-> **The IDE is the runtime.**  
-> **MCP is the toolbox.**  
-> **Workflow + HITL is the manager.**  
-> **An `.md` file is not an agent by itself.**
+You are **not** building a new shop. You are practicing **how a team of AI workers should work on this existing shop** — like job cards, tickets, a factory line, a manager’s signature.
+
+Start at [Session 01](sessions/session-01-foundation/README.md). Map: [learning-path.md](learning-path.md). Shop: [eShop-customer-notification](eShop-customer-notification/README.md).
+
+---
+
+## The shop (one minute)
+
+Two customers each ordered a mug. Warehouse clicks **Ship**.
+
+| Customer | Order | Email setting | What happens |
+|----------|--------|----------------|--------------|
+| C-1001 | ORD-501 | On | Mug ships **and** they get an email |
+| C-1002 | ORD-502 | Off | Mug still ships. **No email.** |
+
+That “off” is **email opt-out**. C-1002 said “don’t email me.” The shop already does this. There is no second product.
+
+**SMS** means phone texts. This shop does not send texts. If a chat says “add SMS opt-out,” the honest answer is “we only have email.” That is not the homework.
+
+Prove the shop:
+
+```powershell
+cd eShop-customer-notification/app
+py -3 -m unittest discover -s tests -v
+py -3 -m shop
+```
+
+Then: http://127.0.0.1:8080/warehouse → ship ORD-502 (C-1002) → http://127.0.0.1:8080/api/outbox → `"status": "skipped_opt_out"`.
+
+---
+
+## The course (what each session is for)
+
+Office analog: a team is about to change this shop. Each session is one team habit.
+
+| Session | Office analog | You will know it worked when |
+|---------|---------------|------------------------------|
+| [01](sessions/session-01-foundation/README.md) | Don’t dump job, playbook, policy, and wiki into one prompt | You can point at four files: who / how / must / facts |
+| [02](sessions/session-02-artifacts-handoff/README.md) | Hand the next person a ticket, not a Slack thread | `analysis.json` has real shop file paths; planner reads only that file |
+| [03](sessions/session-03-sequential/README.md) | Don’t code before design exists | `skip-to-developer` **errors** |
+| [04](sessions/session-04-parallel/README.md) | Three people can read API, DB, UI at once | Three JSON files plus a join; architect+developer together **errors** |
+| [05](sessions/session-05-hitl/README.md) | A named person must sign before design | Second `run` **STOPS** until you approve |
+| [06](sessions/session-06-mcp/README.md) | The job card is not the toolbox | Demo lists tools and **refuses** model self-approve |
+| [07](sessions/session-07-multi-agent/README.md) | Traffic cop + specialists; coder is not QA | Run stops; developer did not write `qa.json` |
+| [08](sessions/session-08-complete-enterprise/README.md) | Same shop, full company-shaped path | `status` is `completed` only after named approves |
+
+Markdown does not run the pipeline. A runtime does (you, an IDE, or these teaching scripts).
+
+---
+
+## Picture of the pieces
 
 ```text
                          ┌──────────────┐
@@ -32,113 +81,60 @@ This folder is a **course and workshop kit**. It is not a production agent platf
                          │   ARTIFACT   │
                          │   HANDOFF    │
                          └──────┬───────┘
-                                │
                                 ▼
                          ┌──────────────┐
                          │   WORKFLOW   │
                          │    ORDER     │
                          └──────┬───────┘
-                                │
                     ┌───────────┴───────────┐
                     ▼                       ▼
                  SEQUENTIAL              PARALLEL
-                    │                       │
                     └───────────┬───────────┘
                                 ▼
                               HITL
                                 │
                                 ▼
-                              MCP
-                                │
-                                ▼
-                              TOOLS
+                              MCP (tools)
 ```
-
-```text
-Foundation → Artifacts → Sequential → Parallel → HITL → MCP → Multi-Agent → Enterprise Workflow
-```
-
-Start at [sessions/session-01-foundation](sessions/session-01-foundation/README.md). Session map: [learning-path.md](learning-path.md).
-
----
-
-## What is this project?
-
-Eight sessions. Each one adds **one** idea. Teach them live (`demo.md`) or study the session `README.md`.
-
-| Session | Topic | New idea | Execution |
-|---------|--------|----------|-----------|
-| 01 | [Foundation](sessions/session-01-foundation/README.md) | Agent, Skill, Rule, Doc | Single |
-| 02 | [Artifact & Handoff](sessions/session-02-artifacts-handoff/README.md) | Durable communication, not chat | Sequential (two workers) |
-| 03 | [Sequential](sessions/session-03-sequential/README.md) | Workflow owns order | Sequential |
-| 04 | [Parallel](sessions/session-04-parallel/README.md) | Independent work, then join | Parallel + join |
-| 05 | [HITL](sessions/session-05-hitl/README.md) | Human approve / reject; model does not self-approve | Sequential + HITL |
-| 06 | [MCP](sessions/session-06-mcp/README.md) | Tools as capabilities, not as the job card | Agent + tools |
-| 07 | [Multi-Agent](sessions/session-07-multi-agent/README.md) | Orchestrator + specialists + least privilege | Sequential + parallel |
-| 08 | [Complete Enterprise](sessions/session-08-complete-enterprise/README.md) | Same feature, full path | Complete |
-
-Markdown does not execute agents. A runtime (IDE or script) does.
-
-- **Native to an IDE:** loading `AGENTS.md` / `CLAUDE.md`, optional subagent folders, optional skill auto-discovery, optional glob rules.
-- **This curriculum’s demos:** small Python scripts and JSON artifacts that **show** sequence, join, HITL stop, and MCP. They are teaching runtimes, not Cursor or Copilot.
 
 ---
 
 ## Who is this for?
 
-Developers, technical leads, architects, AI engineers, solution architects, engineering managers, and anyone learning agentic architecture. Each session README has interview-ready lines.
-
----
+Developers, leads, architects, AI engineers, managers learning agentic architecture. Each session README has interview-ready lines.
 
 ## Prerequisites
 
-- Comfort reading Markdown and a little YAML/JSON
-- Ability to open files in any editor
-- Python 3.10+ **only** if you want to run the later demo scripts (`py -3` on Windows)
-- No vendor certification and no deep ML background
-
----
+- Read Markdown (and a little JSON/YAML)
+- Python 3.10+ (`py -3` on Windows) for the shop tests and later demo scripts
+- No ML background
 
 ## How to use it
 
-1. Skim [Glossary](#glossary) once.
-2. Follow [learning-path.md](learning-path.md).
-3. For a live walkthrough, open each session’s `demo.md`: the problem, what to do, the one takeaway.
-4. Keep [eShop-customer-notification](eShop-customer-notification/README.md) open. The same shop grows from Session 1 to Session 8.
-
-Do not start at Session 8. Session 1 is intentionally small.
+1. Prove the shop once (commands above).
+2. Do sessions 01 → 08. Each `README.md` is “what / how to check.” Each `demo.md` is the click-path.
+3. Do not start at Session 08.
 
 ---
 
 ## Glossary
 
-Markdown configures. A runtime executes. Do not claim Markdown “runs the pipeline” by itself.
-
-| Term | Meaning in this curriculum |
-|------|----------------------------|
+| Term | Meaning here |
+|------|----------------|
 | **Model** | The reasoning engine. Not the agent. |
-| **Agent** | Who does the work: role, inputs, outputs, what it must never do. |
-| **Skill** | How a *type* of work is done (playbook). Reusable across agents. |
-| **Rule** | Short standing constraint. Not a 500-line procedure. |
-| **Doc** | Facts about this system. Not instructions. |
-| **Artifact** | Durable file the next worker reads. Not the chat transcript. |
-| **Handoff** | Passing an artifact (and often a status) to the next stage. |
-| **State** | Where the run is now (`currentStage`, gates). Not conversation memory. |
-| **Workflow** | What runs next, in what order, under what condition. |
-| **Sequential** | B waits for A because B needs A’s output or a gate. |
-| **Parallel** | Independent work at the same time; then a **join**. |
-| **Join** | Wait for branches; then one downstream consumer. |
-| **HITL** | Human-in-the-loop. The run stops until approve or reject. |
-| **MCP** | Model Context Protocol. Standard way to expose tools/resources. |
-| **Tool** | A callable capability (status, read file, scanner). |
-| **Orchestrator** | Sequences specialists. Does not do their specialist work. |
-| **Least privilege** | An agent gets only the access its job needs. |
-| **FACT** | Proven from code, tests, docs, or approved runtime evidence. |
-| **EVIDENCE** | Where the fact was observed. |
-| **INFERENCE** | Reasonable but not proven. Label it. |
-| **UNKNOWN** | Not proven. Do not invent. Escalate. |
-| **Native (IDE)** | What Cursor / Copilot / Claude load by convention. |
-| **Demo runtime** | Teaching scripts in this repo that illustrate order, HITL, MCP. |
+| **Agent** | Who does the work (role, inputs, outputs, never-dos). |
+| **Skill** | How a *type* of work is done (playbook). |
+| **Rule** | Short standing constraint. |
+| **Doc** | Facts. Not instructions. |
+| **Artifact** | Durable file the next worker reads. Not the chat. |
+| **Handoff** | Passing that file (and often a status). |
+| **Workflow** | What runs next, in what order. |
+| **Sequential** | B waits for A. |
+| **Parallel** | Independent work, then a **join**. |
+| **HITL** | Human-in-the-loop. Stop until approve or reject. |
+| **MCP** | Standard plug for tools. |
+| **Orchestrator** | Sequences specialists. Does not do their jobs. |
+| **FACT / EVIDENCE / UNKNOWN** | Proven / where you saw it / not proven — do not invent. |
 
 ---
 
@@ -149,11 +145,9 @@ Markdown configures. A runtime executes. Do not claim Markdown “runs the pipel
 | Requirements → Architecture | Sequential |
 | Architecture → Development | Sequential |
 | API + DB + UI discovery | Parallel |
-| QA + Security analysis | Parallel |
-| Release after QA (and security join) | Sequential |
-| Human approval | Gate |
-| Independent inventory tasks | Parallel |
-| Dependent tasks | Sequential |
+| QA + Security | Parallel |
+| Release after QA | Sequential |
+| Human decision | Gate (HITL) |
 
 ```text
 Dependency exists → Sequential
@@ -163,43 +157,32 @@ External capability required → MCP
 Persistent communication → Artifact
 ```
 
----
-
 ## Least privilege
 
 | Role | Allowed | Not allowed |
 |------|---------|-------------|
 | Architect | Read, analyze, design | Change app code, deploy |
-| Developer | Change application code after design HITL | Approve own work, production deploy |
+| Developer | Change app code after design HITL | Approve own work |
 | QA | Run tests, write verdict | Modify production code |
-| Security | Analyze, set `release_allowed` | Approve release as a human |
-| Release | Deploy after HITL | Invent business rules |
+| Security | Analyze, set `release_allowed` | Act as the human approver |
 | Orchestrator | Sequence, read state | Do specialist design/code |
 
-More capable **models** do not get more **permissions**.
-
----
+Smarter **models** do not get extra **permissions**.
 
 ## Native vs demonstration
 
-| Concern | Native IDE (typical) | This curriculum |
-|---------|----------------------|-----------------|
-| Job cards / skills / rules as files | Yes, if you put them where the product looks | Yes, as teaching files in each session |
-| Subagent picker | `.cursor/agents`, `.github/agents`, `.claude/agents` | Not required for learning |
-| Guaranteed HITL stop | Not reliable across products | Session 5+ **scripts** stop until approve/reject |
+| Concern | Native IDE | This curriculum |
+|---------|------------|-----------------|
+| Job cards as files | Yes, if the product loads them | Teaching files in each session |
+| Guaranteed HITL stop | Not reliable across products | Session 5+ **scripts** stop until you approve |
 | MCP | Product loads a configured server | Session 6 tiny teaching server |
 
-Do not tell learners that a folder of `.md` files is a workflow engine.
+A folder of `.md` files is not a workflow engine.
 
----
-
-## Evidence
+## Evidence (shop)
 
 ```text
-FACT:      GET/PUT /api/customers/{id}/preferences and POST /api/orders/{id}/ship exist.
-EVIDENCE:  eShop-customer-notification/app/shop/api/http.py
-INFERENCE: Preferences are customer-owned; shipping is the send path.
-UNKNOWN:   Whether SMS is a supported channel (not in http.py, db.py, or the HTML pages).
+FACT:      Shipping emails exist. C-1002 with email off is not mailed.
+EVIDENCE:  eShop-customer-notification/app/shop/services/notifications.py
+UNKNOWN:   Any channel not in the app (there is no SMS).
 ```
-
-If it is not proven, it is UNKNOWN. Agents must not invent business behavior.

@@ -17,13 +17,13 @@ class ShipNotifyTests(unittest.TestCase):
         self.conn.executescript(db.SCHEMA)
         db.seed(self.conn)
 
-    def test_maya_is_emailed_when_order_ships(self) -> None:
+    def test_opted_in_customer_is_emailed_when_order_ships(self) -> None:
         result = notifications.ship_and_notify(self.conn, "ORD-501")
         self.assertEqual(result["notification"], "sent")
-        self.assertEqual(result["to"], "maya@example.com")
+        self.assertEqual(result["to"], "c1001@example.com")
         self.assertEqual(db.get_order(self.conn, "ORD-501")["status"], "shipped")
 
-    def test_omar_is_not_emailed(self) -> None:
+    def test_opted_out_customer_is_not_emailed(self) -> None:
         result = notifications.ship_and_notify(self.conn, "ORD-502")
         self.assertEqual(result["notification"], "skipped_opt_out")
         self.assertNotIn("to", result)

@@ -1,33 +1,24 @@
-# Session 01 walkthrough
+# Session 01 — do this
 
-## The problem
+**Shop reminder:** C-1001 gets a shipping email. C-1002 turned email off → mug ships, no mail. That is opt-out. (Phone texts are not in this shop.)
 
-Someone types: “Add SMS opt-out for customer notifications.”
+1. Open `agents/customer-analyst.md`. That is **who**. A file on disk does nothing until you (or an IDE) read it.
 
-A generic chat will invent Twilio. eShop already ships **email** when an order ships. Maya wants that mail. Omar opted out — warehouse still ships, **no email**. SMS is not in the product.
+2. Open `skills/customer-analysis/SKILL.md` (how) and `rules/no-invent.md` (never invent a channel that is not in the code).
 
-This session has **one** worker. Four kinds of file.
+3. Prove the shop in code:
+   - Search `skipped_opt_out` in `../../eShop-customer-notification/app/shop/services/notifications.py`
+   - Open `../../eShop-customer-notification/app/shop/web/settings.html` — the checkbox is **email**
 
-## What to do
+   Optional:
 
-1. Open `agents/customer-analyst.md` — the **job card** (who). It does nothing until a runtime reads it.
+   ```powershell
+   cd ../../eShop-customer-notification/app
+   py -3 -m unittest discover -s tests -v
+   ```
 
-2. Open `skills/customer-analysis/SKILL.md` then `rules/no-invent.md` — **how** vs **must always be true**.
+   The opted-out ship test must pass.
 
-3. Prove email from code. Open:
-   - `../../eShop-customer-notification/business-rules.md`
-   - `../../eShop-customer-notification/app/shop/services/notifications.py` (skip on opt-out)
-   - `../../eShop-customer-notification/app/shop/api/http.py` (routes)
-   - `../../eShop-customer-notification/app/shop/web/settings.html` (email checkbox only)
+4. Write a few lines like [sample-analysis-notes.md](artifacts/sample-analysis-notes.md).
 
-   Search for `sms`. You should find no SMS implementation. UNKNOWN, not “add Twilio.”
-
-4. Optional: copy [Expected output](README.md#expected-output). Cite **file paths**.
-
-## The point
-
-**Who / how / must / facts are four files.** Facts include the shop. No SMS in code → do not ship SMS.
-
-## Next
-
-A planner was not in this chat. Session 02 is the JSON they can trust.
+**Check:** You can say: “Who / how / must / facts are four files. C-1002 is not emailed. That is proven in `notifications.py`.”

@@ -1,92 +1,32 @@
-# Session 08 — Complete Enterprise Demo
+# Session 08 — Same shop, full path
 
-## Objective
+## In this session
 
-Capstone. **Customer Notification Preferences** through the full teaching path. No new primitive — show how Sessions 01–07 fit.
+**Office analog:** Discovery in parallel, then named humans on requirements / design / release, then developer, then QA and security together.
 
-## What you will learn
+**We are doing:** Run the teaching pipeline on **the same eShop**. Confirm the real shop still skips C-1002’s email.
 
-The whole picture: foundation → artifacts → seq/parallel → HITL → MCP (as a layer) → multi-agent → this run.
+**We are not doing:** A new product. Pretending this script is production Cursor.
 
-## Prerequisites
+**How to check:**
 
-Sessions 01–07.
+1. Shop tests still pass (`skipped_opt_out` for C-1002).
+2. `py -3 run_enterprise.py status` is `completed` only after named `approve`s. Developer cannot run before design HITL.
 
-## How it works
+## Why
 
-```text
-                FEATURE
-                   │
-             ORCHESTRATOR
-                   │
-          ┌────────┼────────┐
-          ▼        ▼        ▼
-        API       DB       UI
-          │        │        │
-          └────────┼────────┘
-                   ▼
-                  JOIN → HITL
-                   ↓
-               Requirements → HITL
-                   ↓
-               Architecture → HITL
-                   ↓
-              Implementation
-                   ↓
-              QA + Security → JOIN → HITL → Release
-```
+Session 01 was “understand the shop.” This session is “run a company-shaped process around that same shop.”
 
-Evidence labels (FACT / EVIDENCE / INFERENCE / UNKNOWN) stay on requirements and discovery artifacts. Least privilege as in Session 07. MCP remains the toolbox (Session 06); this script uses the filesystem so the workshop works without IDE config.
+## Walkthrough
 
-This is **not** a copy of `enterprise-agent-platform/`. It is a classroom path with the same *ideas*.
-
-## Folder structure
-
-```text
-agents/     orchestrator, discovery (api/db/ui), consolidator,
-            requirements, architect, developer, qa, security, release
-skills/ rules/ docs/ workflow/
-artifacts/ approvals/
-run_enterprise.py
-```
-
-## Demo
-
-Walkthrough: [demo.md](demo.md).
-
-## What happens internally
-
-Same as Sessions 03–05: files + state. MCP is referenced, not re-implemented here.
-
-## Expected output
-
-```text
-artifacts/
-  api-analysis.json  db-analysis.json  ui-analysis.json  consolidated-discovery.json
-  requirements.json  design.json  implementation.json  qa.json  security.json
-  state.json
-approvals/
-  discovery.json  requirements.json  design.json  release.json
-```
-
-`status` ends at `completed` after release HITL. `unknowns` still include SMS.
-
-## What to observe
-
-SMS stays UNKNOWN. Release waits for join of QA and security plus HITL.
-
-## Common mistakes
-
-Calling this “production Cursor.” It is a demo runtime.
+[demo.md](demo.md)
 
 ## Interview takeaway
 
-1. “A production-grade multi-agent system needs more than prompts: it needs role separation, skills, rules, artifacts, workflow state, tool access, guardrails and human gates.”
-2. “Markdown configures workers; a runtime enforces order and HITL; MCP exposes tools.”
-3. “I parallelize independent discovery and QA/security; I serialize anything that needs an approved design.”
-4. “If behavior is unproven I label UNKNOWN — I do not invent business rules.”
-5. “The developer must not be the only judge of the developer’s work.”
+1. Production-shaped agent work needs roles, artifacts, workflow, tools, and humans — not a pile of prompts.
+2. Parallelize discovery; serialize anything that needs an approved design.
+3. Do not invent a channel the shop does not have.
 
 ## Next
 
-Apply the split in a real repository. Keep knowledge in one `agents/` `skills/` `rules/` `docs/` tree; use workflow + HITL for control; use MCP for tools.
+Use the same split in a real repo. Keep one `agents/` `skills/` `rules/` `docs/` tree.

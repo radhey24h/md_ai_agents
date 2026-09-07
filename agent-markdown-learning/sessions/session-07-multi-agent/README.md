@@ -1,94 +1,41 @@
-# Session 07 — Multi-Agent Workflow
+# Session 07 — Many jobs, writer is not the judge
 
-## Objective
+## In this session
 
-Combine agents, skills, rules, docs, artifacts, sequential, parallel, HITL, and MCP **ideas**. Writer is not the judge.
+**Office analog:** A traffic cop sequences specialists. The person who writes the code does not also certify QA.
 
-## What you will learn
+**We are doing:** One orchestrator. Developer must not write `qa.json`. Script stops until a human is treated as having signed.
 
-Orchestrator role, least privilege, QA ‖ security then join.
+**We are not doing:** One mega-agent that codes, tests, and ships. Extra permissions for the “smartest” model.
 
-## Prerequisites
+**How to check:**
 
-Sessions 01–06.
-
-## How it works
-
-```text
-                  USER
-                    │
-                    ▼
-              ORCHESTRATOR
-                    │
-          ┌─────────┴─────────┐
-          ▼                   ▼
-    REQUIREMENTS           DISCOVERY (parallel API/DB/UI)
-          │                   │
-          └─────────┬─────────┘
-                    ▼
-                   JOIN → HITL → ARCHITECT → HITL → DEVELOPER
-                                                    │
-                                             ┌──────┴──────┐
-                                             ▼             ▼
-                                            QA          SECURITY
-                                             └──────┬──────┘
-                                                    ▼
-                                              JOIN → HITL → RELEASE
+```powershell
+py -3 run_multi.py
 ```
 
-The writer should not be the judge. QA does not modify production code. Security is independent.
+Writes discovery + requirements then **STOPS**. Then:
 
-| Agent | Responsibility | Privilege |
-|-------|----------------|-----------|
-| Orchestrator | Sequence only | No code |
-| Requirements | Spec | Read |
-| Discovery | Inventories (Session 04 fan-out) | Read |
-| Architect | Design | Read |
-| Developer | Code after HITL | Write code |
-| QA | Verdict | Tests, no prod edit |
-| Security | Findings | Read / scanners |
-| Release | After HITL | Deploy (not in this teaching script) |
-
-MCP is a capability layer (Session 06). This session’s script uses local files so the demo runs offline.
-
-## Folder structure
-
-```text
-agents/ (orchestrator, discovery, requirements, architect,
-         developer, qa, security, release)
-skills/ rules/ docs/ workflow/ artifacts/
-run_multi.py
+```powershell
+py -3 run_multi.py --approve-demo
 ```
 
-## Demo
+Design, implementation, qa, security, join. Developer file must not be the author of `qa.json`.
 
-Walkthrough: [demo.md](demo.md).
+## Why
 
-## What happens internally
+If the same agent implements the skip-email path and also certifies it, that is marking its own homework.
 
-Orchestrator does not write `design.json`. QA does not edit code.
+## Walkthrough
 
-## Expected output
-
-`run_multi.py` writes `api-analysis.json`, `db-analysis.json`, `ui-analysis.json`, `requirements.json`, then **stops** (teaching HITL). After `--approve-demo`: `design.json`, `implementation.json`, `qa.json`, `security.json`, `join.json`.
-
-Use `--approve-demo` only in class to simulate a human, and say so out loud.
-
-## What to observe
-
-Developer is not asked to certify QA.
-
-## Common mistakes
-
-One agent with all permissions because it uses a “smart” model.
+[demo.md](demo.md)
 
 ## Interview takeaway
 
-1. “An orchestrator sequences specialists; it does not replace them.”
-2. “The writer should not be the judge: developer ≠ QA ≠ security.”
-3. “I parallelize independent discovery and independent QA/security, then join before the next dependent stage.”
-4. “Permissions follow the role, not the size of the model.”
+1. Orchestrator sequences; it does not replace specialists.
+2. Writer ≠ judge.
+3. Permissions follow the role, not model size.
 
-## Next session
+## Next
 
-[Session 08 — Complete Enterprise](../session-08-complete-enterprise/README.md)
+[Session 08](../session-08-complete-enterprise/README.md) — same shop, every gate named.

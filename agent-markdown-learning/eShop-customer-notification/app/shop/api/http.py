@@ -142,5 +142,5 @@ def serve(host: str = "127.0.0.1", port: int = 8080) -> None:
     print("  GET  /api/customers/C-1001/preferences")
     print("  PUT  /api/customers/C-1001/preferences")
     print("  GET  /api/outbox")
-    print("  POST /api/orders/ORD-502/ship   (Omar is opted out)")
+    print("  POST /api/orders/ORD-502/ship   (C-1002 email off)")
     httpd.serve_forever()

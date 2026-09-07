@@ -1,3 +1,4 @@
 # Facts
 
-Email preference is per customer. Shipping honors opt-out (`skipped_opt_out`). SMS is UNKNOWN — not in eShop.
+C-1001: email on → shipping email.
+C-1002: email off → mug ships, no email.

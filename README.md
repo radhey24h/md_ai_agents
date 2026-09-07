@@ -25,7 +25,7 @@ Use **learning** to understand the pieces. Use **enterprise** to run the same id
 
 Hands-on curriculum. Not a production platform.
 
-One business example throughout: **Customer Notification Preferences**.
+One shop throughout: **eShop** — C-1001 gets a shipping email; C-1002 turned email off. Sessions practice agent habits on that shop.
 
 | Session | Topic | Link |
 |---------|--------|------|
@@ -43,7 +43,7 @@ One business example throughout: **Customer Notification Preferences**.
 - [Learning README](agent-markdown-learning/README.md) — glossary, execution decisions, least privilege
 - [Learning path](agent-markdown-learning/learning-path.md) — what each session adds
 - [Sessions index](agent-markdown-learning/sessions/README.md)
-- [eShop customer notifications](agent-markdown-learning/eShop-customer-notification/README.md) — shop API (email opt-in/out)
+- [eShop](agent-markdown-learning/eShop-customer-notification/README.md) — shipping email shop (C-1001 on, C-1002 off)
 - [Runnable Python app](agent-markdown-learning/eShop-customer-notification/app/README.md)
 
 Open `agent-markdown-learning/` and start at Session 01. Do not start at Session 08.

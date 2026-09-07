@@ -56,12 +56,17 @@ def connect(db_path: Path | None = None) -> sqlite3.Connection:
 def seed(conn: sqlite3.Connection) -> None:
     ts = now()
     customers = [
-        ("C-1001", "maya@example.com", "Maya Patel", 1),
-        ("C-1002", "omar@example.com", "Omar Khan", 0),
+        ("C-1001", "c1001@example.com", "C-1001", 1),
+        ("C-1002", "c1002@example.com", "C-1002", 0),
     ]
     for cid, email, name, enabled in customers:
         conn.execute(
-            "INSERT OR IGNORE INTO customers (id, email, display_name) VALUES (?, ?, ?)",
+            """
+            INSERT INTO customers (id, email, display_name) VALUES (?, ?, ?)
+            ON CONFLICT(id) DO UPDATE SET
+                email = excluded.email,
+                display_name = excluded.display_name
+            """,
             (cid, email, name),
         )
         conn.execute(
